@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACISC - Gerador de Proposta ACCelular</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" type="image/svg+xml" href="icon.svg" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet"> 
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <script src="Jakarta-normal.js"></script>
+    <script src="JakartaBold-bold.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Plus Jakarta Sans', Arial, Helvetica, sans-serif;
+    }
+
+    html{
+        scroll-behavior: smooth
+    }
+
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    </style>
+</head>
+
+
+<body>
+    <div class="fixed inset-0 z-[-1]">
+        <div 
+            class="absolute inset-[-10px] bg-cover bg-center filter blur-sm" 
+            style="background-image: url('https://imgproxy.gamma.app/resize/quality:80/resizing_type:fit/width:1200/https://cdn.gamma.app/163fv1dgclhuo54/edited-images/r9QvEb3qmEDnuRj-WFeC0.png');">
+        </div>
+        
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-emerald-900/70 to-emerald-900/50"></div>
+    </div>
+
+<div class="h-18 w-full">
+    <div class="flex justify-center mb-8 mt-2 px-12 py-2">
+        <picture>
+            <a href="https://www.acisc.com.br/">
+                <img class="h-20" src="./src/Logotipo_ACISC_Branco_2025.webp" alt="ACISC logo">
+            </a>
+        </picture>
+    </div>
+
+</div>
+
+
+<main>
+    
+    <div class="max-w-5xl mt-2 mx-auto bg-gray-50/70 p-8 shadow-2xl rounded-2xl">
+
+        <header>
+            <div class="text-center mb-8 w-full">
+                <h1 class="text-3xl font-bold text-gray-200 bg-teal-900 rounded-tl-2xl shadow-2xl rounded-br-2xl p-2 ">Gerador de Proposta ACCelular</h1>
+            </div>
+        </header>
+
+        <form id="orcamento-form">
+                <section class="mb-8">
+                    <h2 class="text-2xl font-semibold mb-4 bg-teal-700 text-gray-200 rounded-tl-2xl rounded-br-2xl py-2 px-8 w-fit">Informações da Empresa</h2>
+                    <hr class="my-4 border-t border-slate-00">
+                    <div class="space-y-4">
+                        <div >
+                            <label for="nomeEmpresa" class="block text-sm font-medium text-gray-600 mb-1">Empresa:</label>
+                            <div class="flex w-full items-center px-2 bg-gray-50/80 border border-gray-300 rounded-md ">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#4b5563">
+                                    <path d="M94.62-136.92v-700h379.99v160h390.77v540H94.62Zm59.99-60h100.01v-100H154.61v100Zm0-160h100.01v-100H154.61v100Zm0-160h100.01v-100H154.61v100Zm0-160h100.01v-100H154.61v100Zm160 480h100.01v-100H314.61v100Zm0-160h100.01v-100H314.61v100Zm0-160h100.01v-100H314.61v100Zm0-160h100.01v-100H314.61v100Zm160 480h330.78v-420H474.61v100h87.7v60h-87.7v100h87.7v60h-87.7v100Zm175.39-260v-60h60v60h-60Zm0 160v-60h60v60h-60Z"/>
+                                </svg>
+                                <input type="text" id="empresa" name="nomeEmpresa" required class="text-gray-600 text-sm font-semibold bg-transparent focus:outline-none w-full p-2">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="cnpj" class="block text-sm font-medium text-gray-600 mb-1">CNPJ:</label>
+                            <div class="flex w-full items-center px-2 bg-gray-50/80 border border-gray-300 rounded-md ">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#4b5563">
+                                    <path d="m262.69-178.46 40-160h-152.3l15-60h152.3l40.77-163.08h-152.3l15-60h152.3l40-160h59.23l-40 160h165.39l40-160h59.23l-40 160h152.3l-15 60h-152.3l-40.77 163.08h152.3l-15 60h-152.3l-40 160h-59.23l40-160H361.92l-40 160h-59.23Zm114.23-220h165.39l40.77-163.08H417.69l-40.77 163.08Z"/>
+                                </svg>
+                                <input type="text" id="cnpj" name="cnpj" required class="text-gray-600 text-sm font-semibold bg-transparent focus:outline-none w-full p-2" placeholder="xx.xxx.xxx/xxxx-xx">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="vendedor" class="block text-sm font-medium text-gray-600 mb-1">Vendedor:</label>
+                            <div class="flex w-full items-center px-2 bg-gray-50/80 border border-gray-300 rounded-md ">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#4b5563">
+                                    <path d="M480-492.31q-57.75 0-98.87-41.12Q340-574.56 340-632.31q0-57.75 41.13-98.87 41.12-41.13 98.87-41.13 57.75 0 98.87 41.13Q620-690.06 620-632.31q0 57.75-41.13 98.88-41.12 41.12-98.87 41.12ZM180-187.69v-88.93q0-29.38 15.96-54.42 15.96-25.04 42.66-38.5 59.3-29.07 119.65-43.61 60.35-14.54 121.73-14.54t121.73 14.54q60.35 14.54 119.65 43.61 26.7 13.46 42.66 38.5Q780-306 780-276.62v88.93H180Zm60-60h480v-28.93q0-12.15-7.04-22.5-7.04-10.34-19.11-16.88-51.7-25.46-105.42-38.58Q534.7-367.69 480-367.69q-54.7 0-108.43 13.11-53.72 13.12-105.42 38.58-12.07 6.54-19.11 16.88-7.04 10.35-7.04 22.5v28.93Zm240-304.62q33 0 56.5-23.5t23.5-56.5q0-33-23.5-56.5t-56.5-23.5q-33 0-56.5 23.5t-23.5 56.5q0 33 23.5 56.5t56.5 23.5Zm0-80Zm0 384.62Z"/>
+                                </svg>
+                                <input type="text" id="vendedor" name="vendedor" required class="text-gray-600 text-sm font-semibold bg-transparent focus:outline-none w-full p-2">
+                            </div>
+                        </div>
+
+                        <div class="flex flex-row space-x-24">
+                            <div class="w-full">
+                                <label for="whatsapp" class="block text-sm font-medium text-gray-600 mb-1">WhatsApp:</label>
+                                <div class="flex w-full items-center px-2 bg-gray-50/80 border border-gray-300 rounded-md ">
+                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24px"  height="24px"  viewBox="0 0 24 24"  fill="none"  stroke="#4b5563"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-whatsapp">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9" />
+                                        <path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1" />
+                                    </svg>
+
+                                    <input type="text" name="whatsapp" id="whatsapp" class="text-gray-600 text-sm font-semibold bg-transparent focus:outline-none w-full p-2">
+                                </div>
+                            </div>
+                            <div class="w-full">
+                                <label for="email" class="block text-sm font-medium text-gray-600 mb-1">E-mail:</label>
+                                <div class="flex w-full items-center px-2 bg-gray-50/80 border border-gray-300 rounded-md ">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#4b5563">
+                                        <path d="M480-100q-78.77 0-148.14-29.92-69.37-29.92-120.68-81.21-51.31-51.29-81.25-120.63Q100-401.1 100-479.93q0-78.84 29.92-148.21t81.21-120.68q51.29-51.31 120.63-81.25Q401.1-860 479.93-860q78.84 0 148.21 29.93 69.37 29.92 120.68 81.22t81.25 120.65Q860-558.85 860-480v48.77q0 54.77-37.61 93T730-300q-35.39 0-65.62-17.31-30.23-17.31-47.77-47.62Q590.69-334 555.35-317 520-300 480-300q-74.92 0-127.46-52.54Q300-405.08 300-480q0-74.92 52.54-127.46Q405.08-660 480-660q74.92 0 127.46 52.54Q660-554.92 660-480v48.77q0 29.46 20.27 50.35Q700.54-360 730-360q29.46 0 49.73-20.88Q800-401.77 800-431.23V-480q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93h200v60H480Zm0-260q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35Z"/>
+                                    </svg>
+                                    <input type="email" name="email" id="email" class="text-gray-600 text-sm font-semibold bg-transparent focus:outline-none w-full p-2">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="mb-4 mt-16">
+                    <h2 class="text-2xl font-semibold mt-4 mb-4 bg-teal-700 text-gray-200 rounded-tl-2xl rounded-br-2xl py-2 px-8 w-fit">Detalhes das Linhas Móveis</h2>
+                    <hr class="bg-emerald-400">
+                    <div id="campos-adicionar-linha" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 my-4">
+                        <div>
+                            <label for="telefone" class="block text-sm font-medium text-gray-600 mb-1">Número de Telefone:</label>
+                            <input type="text" id="telefone" name="telefone" class="w-full bg-gray-50/80 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="(xx) xxxxx-xxxx">
+                            <span id="avisoTelefone" class="text-red-600 text-sm mt-1" style="display: none;"></span>
+                        </div>
+                        <div>
+                            <label for="operadora" class="block text-sm font-medium text-gray-600 mb-1">Operadora:</label>
+                            <select id="operadora" name="operadora" class="w-full bg-gray-50/80 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                                <option value="" selected disabled>Selecione</option>
+                                <option value="VIVO">VIVO</option>
+                                <option value="CLARO">CLARO</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="processo" class="block text-sm font-medium text-gray-600 mb-1">Processo:</label>
+                            <select id="processo" name="processo" class="w-full bg-gray-50/80 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                                <option value="" selected disabled>Selecione</option>
+                                <option value="Linha Nova">LN</option>
+                                <option value="Portabilidade">PN</option>
+                                <option value="Transferência">TT</option>
+                                <option value="Renovação">RN</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="valor" class="block text-sm font-medium text-gray-600 mb-1">Dados:</label>
+                            <input type="number" id="dados" name="dados" class="w-full bg-gray-50/80 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="GB">
+                        </div>
+                        <div>
+                            <label for="valor" class="block text-sm font-medium text-gray-600 mb-1">Valor:</label>
+                            <input type="text" id="valor" name="valor" class="w-full bg-gray-50/80 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="$">
+                        </div>
+                    </div>
+
+                    <button type="button" id="btn-adicionar" class="py-2 px-4 bg-emerald-600 text-white rounded-full hover:bg-emerald-700 active:scale-95 transform focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <div class="flex flex-row space-x-2 font-medium">
+                            <p>Adicionar Linha</p>
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#fff">
+                                <path d="M648.92-522.85v-126.07H522.85v-45.39h126.07V-820h45.39v125.69H820v45.39H694.31v126.07h-45.39ZM775.38-140Q669-140 556-193.69q-113-53.7-210.81-151.7-97.8-98-151.5-210.8Q140-669 140-775.38q0-19.12 12.64-31.87T184.23-820h114.13q15.64 0 26.41 10.19 10.77 10.2 15.15 26.35l23.85 107.18q2.08 15.13-1 27.2-3.08 12.08-11.69 20.31l-94.39 91.92q26.77 45.93 56.54 85.08t64.39 73.54q37.38 38.38 79.53 70.08 42.16 31.69 90.24 57.61l90.76-93.38q10-11 22.39-14.81 12.39-3.81 25.84-1.81l97.08 21.39q16.15 3.61 26.35 16.26Q820-310.24 820-294.23v110q0 18.95-12.75 31.59T775.38-140ZM234-578l82.54-80.08q1.54-1.53 2.11-4.23.58-2.69.2-5L297-768.46q-.38-3.08-2.5-4.62-2.11-1.53-5.19-1.53h-98.54q-2.31 0-3.85 1.53-1.53 1.54-1.53 3.85.84 41.62 12.92 88.69Q210.39-633.46 234-578Zm356.31 349.15q41 20.16 89.77 31.39 48.77 11.23 89.15 12.46 2.31 0 3.85-1.54 1.53-1.54 1.53-3.85v-98.15q0-3.08-1.53-5.19-1.54-2.12-4.62-2.5l-90.69-18.69q-2.31-.39-4.04.19-1.73.58-3.65 2.11l-79.77 83.77ZM234-578Zm356.31 349.15Z"/>
+                            </svg>
+                        </div>
+                    </button>
+                    <h3 class="text-xl font-semibold text-slate-700 mt-8 mb-4">Pré-visualização do Orçamento</h3>
+                    <table id="tabela" class="w-full bg-gray-50/80 border-collapse table-auto border-2 border-teal-700">
+                        <thead class="bg-teal-700 text-gray-200 text-center">
+                            <tr>
+                                <th class="p-3">Número de Telefone</th>
+                                <th class="p-3">Operadora</th>
+                                <th class="p-3">Processo</th>
+                                <th class="p-3">Dados</th>
+                                <th class="p-3 space-x-2">
+                                    <span>Valor</span>
+                                    <input type="checkbox" id="ocultar-valor" style="display: none; margin: 0 4px;">
+                                    <i class="fas fa-eye" id="toggle-valor-icon" style="cursor: pointer;"></i>
+                                </th>
+                                <th class="td-apagar p-3">Opções</th>
+                            </tr>
+                        </thead>
+                        <tbody id="corpo-tabela-linhas" class="text-center">
+                            </tbody>
+                        <tfoot class="text-center border-2 border-teal-700">
+                            <tr >
+                                <td colspan="3" class="text-center text-slate-700 font-semibold">VALOR TOTAL:</td>
+                                <td id="valor-total" rowspan="2" class="text-center text-slate-700 font-black"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="text-xs text-slate-600" id="barraResumo"></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </section>
+                <div class="flex justify-end mt-8">
+                    <button type="button" id="gerarPdf" class="px-12 py-3 bg-emerald-600 text-white font-bold text-lg rounded-lg hover:bg-emerald-700 active:scale-95 focus:outline-none focus:ring-2 focus:ring-green-500">
+                        <div class="flex flex-row space-x-2">
+                            <p>Gerar PDF</p>
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#fff">
+                                <path d="M327.69-453.85h304.62v-60H327.69v60Zm0 115.39h304.62v-60H327.69v60Zm0 115.38h184.62v-60H327.69v60ZM252.31-100Q222-100 201-121q-21-21-21-51.31v-615.38Q180-818 201-839q21-21 51.31-21H570l210 210v477.69Q780-142 759-121q-21 21-51.31 21H252.31ZM540-620v-180H252.31q-4.62 0-8.46 3.85-3.85 3.84-3.85 8.46v615.38q0 4.62 3.85 8.46 3.84 3.85 8.46 3.85h455.38q4.62 0 8.46-3.85 3.85-3.84 3.85-8.46V-620H540ZM240-800v180-180V-160v-640Z"/>
+                            </svg>
+                        </div>
+                    </button>
+                </div>
+            </form>
+</main>
+</div>
+
+<footer class="max-w-4xl mt-2 mx-auto bg-transparent text-center p-8 rounded-lg shadow-lg">
+    <p class="text-slate-400 font-semibold text-sm">2025 - Desenvolvido por Lucas Santana</p>
+</footer>
+
+
+<script src="script.js"></script>
+</body>
+</html>
