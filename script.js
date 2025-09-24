@@ -9,38 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputWhatsapp = document.getElementById('whatsapp');
     const inputCnpj = document.getElementById('cnpj');
 
-    function atualizarResumoProcessos() {
-        const colunaDoProcesso = 2;
-        const divResumo = document.getElementById('barraResumo');
-        const contagem = { "Portabilidade": 0, "Linha Nova": 0, "Renovação": 0, "Transferência": 0 };
-        const todasAsLinhas = corpoTabela.querySelectorAll('tr');
-
-        todasAsLinhas.forEach(linha => {
-            const celulaProcesso = linha.cells[colunaDoProcesso];
-            if (celulaProcesso) {
-                const tipoProcesso = celulaProcesso.textContent.trim();
-                if (contagem.hasOwnProperty(tipoProcesso)) {
-                    contagem[tipoProcesso]++;
-                }
-            }
-        });
-
-        let resumoPartes = [];
-        const totalGeral = todasAsLinhas.length;
-        for (const tipo in contagem) {
-            const quantidade = contagem[tipo];
-            if (quantidade > 0) {
-                const quantidadeFormatada = String(quantidade).padStart(2, '0');
-                resumoPartes.push(`${quantidadeFormatada} - ${tipo}`);
-            }
-        }
-        let textoFinal = `Processos Totais: ${String(totalGeral).padStart(2, '0')}`;
-        if (resumoPartes.length > 0) {
-            textoFinal += ` (${resumoPartes.join(' | ')})`;
-        }
-        divResumo.textContent = textoFinal;
-    }
-
     function formatarTelefone(e) {
         const input = e.target;
         let value = input.value.replace(/\D/g, '');
@@ -344,24 +312,50 @@ doc.save(`Proposta-${document.getElementById('empresa').value.replace(/[\/\\?%*:
 
             dadosDaTabela.push({ telefone, operadora, processo, dados, valor:valorNumerico });
 
-            const atualizarTotal = () => {
-                let total = 0;
-                const celulasValor = corpoTabela.querySelectorAll('tr td:nth-child(5)');
-                celulasValor.forEach(celula => {
-                    let valorString = celula.textContent;
-                    valorString = valorString.replace('R$', '').replace(/\./g, '').trim();
-                    valorString = valorString.replace(',', '.');
-                    const valorNumerico = parseFloat(valorString);
-                    if (!isNaN(valorNumerico)) {
-                        total += valorNumerico;
-                    }
-                });
-                atualizarResumoProcessos();
-                valorTotal.textContent = new Intl.NumberFormat('pt-BR', {
-                    style: 'currency',
-                    currency: 'BRL'
-                }).format(total);
-            };
+        function atualizarResumoProcessos() {
+            const divResumo = document.getElementById('barraResumo');
+            const contagem = { "Portabilidade": 0, "Linha Nova": 0, "Renovação": 0, "Transferência": 0 };
+            const totalGeral = dadosDaTabela.length;
+            dadosDaTabela.forEach(item => {
+                const tipoProcesso = item.processo; 
+
+                if (contagem.hasOwnProperty(tipoProcesso)) {
+                    contagem[tipoProcesso]++;
+                }
+            });
+            let resumoPartes = [];
+            for (const tipo in contagem) {
+                const quantidade = contagem[tipo];
+                if (quantidade > 0) {
+                    const quantidadeFormatada = String(quantidade).padStart(2, '0');
+                    resumoPartes.push(`${quantidadeFormatada} - ${tipo}`);
+                }
+            }
+
+            let textoFinal = `Processos Totais: ${String(totalGeral).padStart(2, '0')}`;
+            if (resumoPartes.length > 0) {
+                textoFinal += ` (${resumoPartes.join(' | ')})`;
+            }
+
+            divResumo.textContent = textoFinal;
+        }
+
+        const atualizarTotal = () => {
+            let total = 0;
+            dadosDaTabela.forEach(item => {
+                const valorNumerico = parseFloat(item.valor); 
+                if (!isNaN(valorNumerico)) {
+                    total += valorNumerico;
+                }
+            });
+            valorTotal.textContent = new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            }).format(total);
+        }; 
+
+        atualizarResumoProcessos();
+        atualizarTotal();
 
             const novaLinhaHTML = `
                 <tr>
@@ -387,9 +381,10 @@ doc.save(`Proposta-${document.getElementById('empresa').value.replace(/[\/\\?%*:
                     }
                     
                     linhaRemover.remove();
+                    atualizarTotal();
+                    atualizarResumoProcessos()
             });
-            atualizarTotal();
-            atualizarResumoProcessos();
+            
         });
     }
 
