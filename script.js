@@ -64,6 +64,7 @@ function gerarPdf() {
     const cnpj = document.getElementById('cnpj').value;
     const whatsapp = document.getElementById('whatsapp').value;
     const email = document.getElementById('email').value;
+    const solicitante = document.getElementById('solicitante').value;
     const ocultarValor = document.getElementById('ocultar-valor').checked;
 
     const { jsPDF } = window.jspdf;
@@ -81,14 +82,14 @@ doc.addImage(logoBase64, 'PNG', 10, 5, 50, 16);
 doc.setFontSize(10);
 doc.setTextColor(255, 255, 255); 
 doc.setFont("Jakarta", "normal");
-doc.text("lorem ipsum", 10, 5 + 16 + 4);
+// doc.text(".", 10, 5 + 16 + 4);
 yOffset += 10;
     
 doc.setFontSize(10);
 doc.setTextColor(255, 255, 255);
     
 doc.setFont("JakartaBold", "bold");
-doc.text("Proposta ACCelular - ACISC", pageWidth - 10, 10, { align: 'right' });
+doc.text("Gestão de Telefonia Móvel", pageWidth - 10, 10, { align: 'right' });
 doc.setFontSize(8);
 doc.text(`Data: ${new Date().toLocaleDateString('pt-BR')}`, pageWidth - 10, 17, { align: 'right' });
 
@@ -116,14 +117,20 @@ doc.setFontSize(12);
 doc.setFont("JakartaBold", "bold");
 doc.setTextColor(15, 118, 110);
 doc.text(`CNPJ:`, 14, yOffset + 13);
+
+doc.text(`Solicitante:`, 106, yOffset + 13)
 yOffset += 6.5;
 
 doc.setFillColor(226, 232, 240);
-doc.roundedRect(13, yOffset + 8, 184, 7, 2, 2, 'F');
+doc.roundedRect(13, yOffset + 8, 85, 7, 2, 2, 'F');
 doc.setFont("Jakarta", "normal");
 doc.setTextColor(75, 85, 99);
-doc.text(`${cnpj}`, 14, yOffset + 13);
+doc.text(`${cnpj}`, 15, yOffset + 13);
 
+
+doc.setFillColor(226, 232, 240);
+doc.roundedRect(105, yOffset + 8, 91, 7, 2, 2, 'F');
+doc.text(`${solicitante}`, 107, yOffset + 13);
 yOffset += 23;
 
 const totalNumerico = dadosDaTabela.reduce((soma, item) => {
@@ -172,15 +179,15 @@ if (ocultarValor) {
     doc.setTextColor(255, 255, 255);
     doc.setFont("JakartaBold", "bold");
     doc.roundedRect(
-    (doc.internal.pageSize.getWidth() - (doc.getTextWidth(`Detalhes`) + 10)) / 2, 
+    (doc.internal.pageSize.getWidth() - (doc.getTextWidth(`Proposta ACCelular - ACISC`) + 10)) / 2, 
     yOffset + 6,
-    doc.getTextWidth(`Detalhes`) + 10,
+    doc.getTextWidth(`Proposta ACCelular - ACISC`) + 10,
     7, 
     2, 2, 'FD'
 );
 
     doc.text(
-        `Detalhes`, 
+        `Proposta ACCelular - ACISC`, 
         doc.internal.pageSize.getWidth() / 2,
         yOffset + 11, 
         { align: 'center' }
@@ -223,15 +230,29 @@ doc.autoTable({
     },
 
     didDrawPage: function (data) {
-        const pageHeight = doc.internal.pageSize.getHeight();
-        const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const pageWidth = doc.internal.pageSize.getWidth();
 
-        doc.setFillColor(15, 118, 110);
-        doc.rect(0, pageHeight - 14, pageWidth, 15, 'F');
+    doc.setFillColor(15, 118, 110);
+    doc.rect(0, pageHeight - 14, pageWidth, 15, 'F'); 
 
+
+    doc.setFontSize(7);
+    doc.setFont("JakartaBold", "bold");
+    doc.setTextColor(168, 205, 202);
+    doc.text(
+        [
+            vendedor,
+            'teste'
+        ],
+        pageWidth / 2,
+        pageHeight - 20,
+        { align: 'center' }
+    )
+        
         doc.setFontSize(7);
         doc.setTextColor(168, 205, 202);
-        
+
         doc.text(
             [
                 'Associação Comercial e Industrial de São Carlos - ACISC',
@@ -248,55 +269,8 @@ doc.autoTable({
         doc.text(pageStr, pageWidth - 15, pageHeight - 6, { align: 'right' });
     }
 
+    
 });
-
-const finalYdaTabela = doc.lastAutoTable.finalY;
-
-if (finalYdaTabela + 30 > doc.internal.pageSize.getHeight() - 20) {
-    doc.addPage();
-
-    doc.setFontSize(12);
-    doc.setFillColor(15, 118, 110);
-    doc.setTextColor(255, 255, 255);
-    doc.setFont("JakartaBold", "bold");
-    doc.roundedRect(10, 20, doc.getTextWidth(vendedor) + 6, 7, 2, 2, 'FD');
-    doc.text(vendedor, 12, 25); 
-
-    doc.setFontSize(11);
-    doc.setTextColor(75, 85, 99);
-    doc.setFont("Jakarta", "normal");
-    doc.setFillColor(226, 232, 240);
-    doc.roundedRect(10, 28, doc.getTextWidth(`WhatsApp: ${whatsapp}`) + 6, 7, 2, 2, 'F'); 
-    doc.text(`WhatsApp: ${whatsapp}`, 13, 32); 
-
-    doc.setFontSize(11);
-    doc.setTextColor(75, 85, 99);
-    doc.setFont("Jakarta", "normal");
-    doc.setFillColor(226, 232, 240);
-    doc.roundedRect(10, 36, doc.getTextWidth(`E-mail: ${email}`) + 6, 7, 2, 2, 'F');
-    doc.text(`E-mail: ${email}`, 13, 41);
-} else {
-    doc.setFontSize(12);
-    doc.setFillColor(15, 118, 110);
-    doc.setTextColor(255, 255, 255);
-    doc.setFont("JakartaBold", "bold");
-    doc.roundedRect(10, finalYdaTabela + 10, doc.getTextWidth(vendedor) + 6, 7, 2, 2, 'FD');
-    doc.text(vendedor, 12, finalYdaTabela + 15);
-
-    doc.setFontSize(11);
-    doc.setTextColor(75, 85, 99);
-    doc.setFont("Jakarta", "normal");
-    doc.setFillColor(226, 232, 240);
-    doc.roundedRect(10, finalYdaTabela + 18, doc.getTextWidth(`WhatsApp: ${whatsapp}`) + 6, 7, 2, 2, 'F'); 
-    doc.text(`WhatsApp: ${whatsapp}`, 12, finalYdaTabela + 23);
-
-    doc.setFontSize(11);
-    doc.setTextColor(75, 85, 99);
-    doc.setFont("Jakarta", "normal");
-    doc.setFillColor(226, 232, 240);
-    doc.roundedRect(10, finalYdaTabela + 26, doc.getTextWidth(`E-mail: ${email}`) + 6, 7, 2, 2, 'F'); 
-    doc.text(`E-mail: ${email}`, 12, finalYdaTabela + 31);
-}
 
 doc.save(`Proposta-${document.getElementById('empresa').value.replace(/[\/\\?%*:|"<> ]/g, '_')}.pdf`);
 };
