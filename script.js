@@ -9,37 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputWhatsapp = document.getElementById('whatsapp');
     const inputCnpj = document.getElementById('cnpj');
 
-    function atualizarResumoProcessos() {
-        const colunaDoProcesso = 2;
-        const divResumo = document.getElementById('barraResumo');
-        const contagem = { "Portabilidade": 0, "Linha Nova": 0, "Renovação": 0, "Transferência": 0 };
-        const todasAsLinhas = corpoTabela.querySelectorAll('tr');
 
-        todasAsLinhas.forEach(linha => {
-            const celulaProcesso = linha.cells[colunaDoProcesso];
-            if (celulaProcesso) {
-                const tipoProcesso = celulaProcesso.textContent.trim();
-                if (contagem.hasOwnProperty(tipoProcesso)) {
-                    contagem[tipoProcesso]++;
-                }
-            }
-        });
-
-        let resumoPartes = [];
-        const totalGeral = todasAsLinhas.length;
-        for (const tipo in contagem) {
-            const quantidade = contagem[tipo];
-            if (quantidade > 0) {
-                const quantidadeFormatada = String(quantidade).padStart(2, '0');
-                resumoPartes.push(`${quantidadeFormatada} - ${tipo}`);
-            }
-        }
-        let textoFinal = `Processos Totais: ${String(totalGeral).padStart(2, '0')}`;
-        if (resumoPartes.length > 0) {
-            textoFinal += ` (${resumoPartes.join(' | ')})`;
-        }
-        divResumo.textContent = textoFinal;
-    }
 
     function formatarTelefone(e) {
         const input = e.target;
@@ -330,12 +300,43 @@ doc.save(`Proposta-${document.getElementById('empresa').value.replace(/[\/\\?%*:
                         total += valorNumerico;
                     }
                 });
-                atualizarResumoProcessos();
                 valorTotal.textContent = new Intl.NumberFormat('pt-BR', {
                     style: 'currency',
                     currency: 'BRL'
                 }).format(total);
             };
+
+            function atualizarResumoProcessos() {
+                const colunaDoProcesso = 2;
+                const divResumo = document.getElementById('barraResumo');
+                const contagem = { "Portabilidade": 0, "Linha Nova": 0, "Renovação": 0, "Transferência": 0 };
+                const todasAsLinhas = corpoTabela.querySelectorAll('tr');
+
+                todasAsLinhas.forEach(linha => {
+                    const celulaProcesso = linha.cells[colunaDoProcesso];
+                    if (celulaProcesso) {
+                        const tipoProcesso = celulaProcesso.textContent.trim();
+                        if (contagem.hasOwnProperty(tipoProcesso)) {
+                            contagem[tipoProcesso]++;
+                        }
+                    }
+                });
+
+                let resumoPartes = [];
+                const totalGeral = todasAsLinhas.length;
+                for (const tipo in contagem) {
+                    const quantidade = contagem[tipo];
+                    if (quantidade > 0) {
+                        const quantidadeFormatada = String(quantidade).padStart(2, '0');
+                        resumoPartes.push(`${quantidadeFormatada} - ${tipo}`);
+                    }
+                }
+                let textoFinal = `Processos Totais: ${String(totalGeral).padStart(2, '0')}`;
+                if (resumoPartes.length > 0) {
+                    textoFinal += ` (${resumoPartes.join(' | ')})`;
+                }
+                divResumo.textContent = textoFinal;
+            }
 
             const novaLinhaHTML = `
                 <tr>
@@ -361,20 +362,22 @@ doc.save(`Proposta-${document.getElementById('empresa').value.replace(/[\/\\?%*:
                     }
                     
                     linhaRemover.remove();
-            });
-            atualizarTotal();
-            atualizarResumoProcessos();
+                    atualizarTotal();
+                    atualizarResumoProcessos();
+                });
+                atualizarTotal();
+                atualizarResumoProcessos();
         });
     }
 
 botaoGerarPdf.addEventListener('click', gerarPdf);
     
-const inputsTelefone = [inputTelefone, inputWhatsapp];
-inputsTelefone.forEach(input => {
-    if (input) {
-        input.addEventListener('input', formatarTelefone);
-    }
-});
+    const inputsTelefone = [inputTelefone, inputWhatsapp];
+    inputsTelefone.forEach(input => {
+        if (input) {
+            input.addEventListener('input', formatarTelefone);
+        }
+    });
 
     if (inputValor) {
         inputValor.addEventListener('input', function() {
