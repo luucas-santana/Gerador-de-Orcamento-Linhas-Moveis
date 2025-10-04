@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputTelefone = document.getElementById('telefone');
     const inputWhatsapp = document.getElementById('whatsapp');
     const inputCnpj = document.getElementById('cnpj');
+    const inputDados = document.getElementById('dados');
+    let tabelaPreenchida = false;
 
 
 
@@ -385,6 +387,9 @@ doc.save(`Proposta-${document.getElementById('empresa').value.replace(/[\/\\?%*:
                 </tr>
             `;
             corpoTabela.insertAdjacentHTML('beforeend', novaLinhaHTML);
+
+            tabelaPreenchida = true;
+            console.log("Tabela modificada! O aviso de saída será ativado.");   
             
             const novoBotao = corpoTabela.lastElementChild.querySelector('button');
             novoBotao.addEventListener('click', (event) => {
@@ -398,11 +403,19 @@ doc.save(`Proposta-${document.getElementById('empresa').value.replace(/[\/\\?%*:
                     linhaRemover.remove();
                     atualizarTotal();
                     atualizarResumoProcessos();
+                    tabelaPreenchida = false;
+                    console.log("Tabela excluída.");   
                 });
                 atualizarTotal();
                 atualizarResumoProcessos();
         });
     }
+
+    window.addEventListener('beforeunload', function (event) {
+        if (tabelaPreenchida) {
+            event.preventDefault();
+        }
+    }); 
 
 botaoGerarPdf.addEventListener('click', gerarPdf);
     
@@ -446,6 +459,17 @@ botaoGerarPdf.addEventListener('click', gerarPdf);
         });
     }
 
+    if (inputDados) {
+        inputDados.addEventListener('input', function() {
+            const limiteDados = 999;
+            let dados = parseInt(this.value.replace(/\D/g, ''), 10) || 0;
+            if (dados > limiteDados) { 
+                dados = limiteDados
+            }
+            this.value = dados === 0 ? '' : dados;
+        });
+    };
+
     const checkboxOcultarValor = document.getElementById('ocultar-valor');
     const iconeToggleValor = document.getElementById('toggle-valor-icon');
 
@@ -461,6 +485,6 @@ botaoGerarPdf.addEventListener('click', gerarPdf);
         iconeToggleValor.classList.add('fa-eye');
         iconeToggleValor.title = 'Colunas visíveis no PDF';
     }
-});
 
+});
 });
