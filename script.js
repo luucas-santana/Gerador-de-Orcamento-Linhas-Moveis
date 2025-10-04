@@ -126,7 +126,7 @@ if (ocultarValor) {
     });
 
     footer = [
-        [{ content: 'Total Geral:', colSpan: 3, styles: { halign: 'center' } }, totalFormatado]
+        [{ content: 'Valor Total:', colSpan: 3, styles: { halign: 'center' } }, totalFormatado]
     ];
 } else {
     headers = [["Telefone", "Operadora", "Processo", "Dados", "Valor"]];
@@ -207,8 +207,8 @@ doc.autoTable({
     doc.setFontSize(11);
     doc.setFont("JakartaBold", "bold");
     doc.setFillColor(15, 118, 110);
-    doc.roundedRect(8, pageHeight - 32, doc.getTextWidth(vendedor) + 4, 6, 2, 2, 'FD');
     doc.setTextColor(255, 255, 255);
+    doc.roundedRect(8, pageHeight - 32, doc.getTextWidth(vendedor) + 4, 6, 2, 2, 'FD');
     doc.text(vendedor, 10, pageHeight - 28); 
     
     doc.setFontSize(9);
@@ -248,28 +248,33 @@ if (finalYdaTabela + 30 > doc.internal.pageSize.getHeight() - 20) {
     elementoY = finalYdaTabela + 3; 
 }
 
+doc.setFillColor(75, 85, 99);
+doc.setLineWidth(0.4);
+doc.roundedRect(10, elementoY + 2, 184.5 + 6, 22, 2, 2, 'D'); 
+doc.setFont("JakartaBold", "bold");
+doc.setFontSize(9);
+doc.setTextColor(15, 118, 110);
+doc.text(`Confira os benefícios:`, 12, elementoY + 6)
+
 doc.setFontSize(8);
+doc.setTextColor(75, 85, 99);
+doc.text("\u2022 Zero Burocracia -", 12, elementoY + 10)
+doc.text("\u2022 Atendimento Ágil -", 12, elementoY + 14)
+doc.text("\u2022 Faturas Fixas -", 12, elementoY + 18)
+doc.text("\u2022 Sem Renovação ou Reajuste Automático -", 12, elementoY + 22)
 
-doc.setFillColor(15, 118, 110);
-// doc.setLineWidth(0.4);
-// doc.setTextColor(75, 85, 99);
-doc.setTextColor(255, 255, 255);
-
-doc.roundedRect(10, elementoY, 184.5 + 6, 20, 2, 2, 'FD'); 
-doc.text(`Confira os benefícios:`, 12, elementoY + 4)
 doc.setFont("Jakarta", "normal");
-doc.text(
-    [
-        '\u2022 Zero Burocracia - Esqueça 0800 ou lojas físicas, nós resolvemos com a operadora.',
-        '\u2022 Atendimento Ágil - Suporte dedicado através do WhatsApp, todos os dias.',
-        '\u2022 Faturas Fixas - Proteção contra migrações de planos mais caros sem aviso, conforme aprovado na Resolução ANATEL 765.',
-        '\u2022 Sem Renovação ou Reajuste Automático - Total controle sobre o plano ou aumento de custos.',
-    ], 
-    12, elementoY + 8); 
+doc.setTextColor(75, 85, 99);
+doc.text("Esqueça 0800 ou lojas físicas, nós resolvemos com a operadora", 39, elementoY + 10)
+doc.text("Suporte dedicado através do WhatsApp, todos os dias", 41, elementoY + 14)
+doc.text("Proteção contra migrações de planos mais caros", 35, elementoY + 18)
+doc.text("Total controle sobre o plano e aumento de custos", 73, elementoY + 22)
+    
+doc.setFont("Jakarta", "normal");
+doc.setFontSize(5);
+doc.setTextColor(75, 85, 99);
+doc.text(`*Esta tabela de valores terá validade apenas se corresponder à última revisão oficializada pela ACISC.`, 64, elementoY + 28,); 
 
-    doc.setFontSize(5);
-    doc.setTextColor(75, 85, 99);
-    doc.text(`Esta tabela de valores terá validade apenas se corresponder à última revisão oficializada pela ACISC.`, 12, elementoY + 24,); 
 
 doc.save(`Proposta-${document.getElementById('empresa').value.replace(/[\/\\?%*:|"<> ]/g, '_')}.pdf`);
 };
