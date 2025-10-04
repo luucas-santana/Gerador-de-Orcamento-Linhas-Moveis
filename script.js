@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
+
 function gerarPdf() {
     const empresa = document.getElementById('empresa').value;
     const vendedor = document.getElementById('vendedor').value;
@@ -36,7 +37,7 @@ function gerarPdf() {
     const email = document.getElementById('email').value;
     const solicitante = document.getElementById('solicitante').value;
     const ocultarValor = document.getElementById('ocultar-valor').checked;
-
+    
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
@@ -151,10 +152,7 @@ if (ocultarValor) {
     doc.roundedRect(
     (doc.internal.pageSize.getWidth() - (doc.getTextWidth(`Proposta ACCelular - ACISC`) + 10)) / 2, 
     yOffset + 6,
-    doc.getTextWidth(`Proposta ACCelular - ACISC`) + 10,
-    7, 
-    2, 2, 'FD'
-);
+    doc.getTextWidth(`Proposta ACCelular - ACISC`) + 10, 7, 2, 2, 'FD');
 
     doc.text(
         `Proposta ACCelular - ACISC`, 
@@ -162,16 +160,16 @@ if (ocultarValor) {
         yOffset + 11, 
         { align: 'center' }
     );
-
     yOffset += 15;
 
 doc.autoTable({
     startY: yOffset,
-    margin: {left: 10, right: 10},
+    margin: {left: 10, right: 10, bottom: 33},
     head: headers,
     body: data,
     foot: footer,
     theme: 'striped',
+    showFoot: 'lastPage',
     styles: {
         font: 'Jakarta',
         fontStyle: 'normal',
@@ -199,26 +197,26 @@ doc.autoTable({
         lineWidth: 0.1,
     },
 
-    didDrawPage: function (data) {
+ didDrawPage: function (data) {
     const pageHeight = doc.internal.pageSize.getHeight();
     const pageWidth = doc.internal.pageSize.getWidth();
-
+    
     doc.setFillColor(15, 118, 110);
-    doc.rect(0, pageHeight - 14, pageWidth, 15, 'F'); 
+    doc.rect(0, pageHeight - 14, pageWidth, 15, 'F');
 
-
-    doc.setFontSize(7);
+    doc.setFontSize(11);
     doc.setFont("JakartaBold", "bold");
-    doc.setTextColor(168, 205, 202);
-    doc.text(
-        [
-            vendedor,
-            'teste'
-        ],
-        pageWidth / 2,
-        pageHeight - 20,
-        { align: 'center' }
-    )
+    doc.setFillColor(15, 118, 110);
+    doc.roundedRect(8, pageHeight - 32, doc.getTextWidth(vendedor) + 4, 6, 2, 2, 'FD');
+    doc.setTextColor(255, 255, 255);
+    doc.text(vendedor, 10, pageHeight - 28); 
+    
+    doc.setFontSize(9);
+    doc.setFont("Jakarta", "normal");
+    doc.setTextColor(75, 85, 99);
+    doc.text(`Whatsapp: ${whatsapp}`, 10, pageHeight - 28 + 6);
+
+    doc.text(`E-mail: ${email}`, 10, pageHeight - 28 + 6 + 4);
         
         doc.setFontSize(7);
         doc.setTextColor(168, 205, 202);
@@ -238,9 +236,40 @@ doc.autoTable({
         const pageStr = `Página ${data.pageNumber}`;
         doc.text(pageStr, pageWidth - 15, pageHeight - 6, { align: 'right' });
     }
-
-    
 });
+
+const finalYdaTabela = doc.lastAutoTable.finalY;
+let elementoY;
+
+if (finalYdaTabela + 30 > doc.internal.pageSize.getHeight() - 20) {
+    doc.addPage();
+    elementoY = 20; 
+} else {
+    elementoY = finalYdaTabela + 3; 
+}
+
+doc.setFontSize(8);
+
+doc.setFillColor(15, 118, 110);
+// doc.setLineWidth(0.4);
+// doc.setTextColor(75, 85, 99);
+doc.setTextColor(255, 255, 255);
+
+doc.roundedRect(10, elementoY, 184.5 + 6, 20, 2, 2, 'FD'); 
+doc.text(`Confira os benefícios:`, 12, elementoY + 4)
+doc.setFont("Jakarta", "normal");
+doc.text(
+    [
+        '\u2022 Zero Burocracia - Esqueça 0800 ou lojas físicas, nós resolvemos com a operadora.',
+        '\u2022 Atendimento Ágil - Suporte dedicado através do WhatsApp, todos os dias.',
+        '\u2022 Faturas Fixas - Proteção contra migrações de planos mais caros sem aviso, conforme aprovado na Resolução ANATEL 765.',
+        '\u2022 Sem Renovação ou Reajuste Automático - Total controle sobre o plano ou aumento de custos.',
+    ], 
+    12, elementoY + 8); 
+
+    doc.setFontSize(5);
+    doc.setTextColor(75, 85, 99);
+    doc.text(`Esta tabela de valores terá validade apenas se corresponder à última revisão oficializada pela ACISC.`, 12, elementoY + 24,); 
 
 doc.save(`Proposta-${document.getElementById('empresa').value.replace(/[\/\\?%*:|"<> ]/g, '_')}.pdf`);
 };
@@ -428,6 +457,5 @@ botaoGerarPdf.addEventListener('click', gerarPdf);
         iconeToggleValor.title = 'Colunas visíveis no PDF';
     }
 });
-
 
 });
