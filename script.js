@@ -78,6 +78,7 @@ doc.setTextColor(15, 118, 110);
 doc.text(`Empresa:`, 14, yOffset + 13);
 yOffset += 6.5;
 
+doc.setFontSize(10);
 doc.setFillColor(226, 232, 240);
 doc.roundedRect(13, yOffset + 8, 184, 7, 2, 2, 'F');
 doc.setFont("Jakarta", "normal");
@@ -94,6 +95,7 @@ doc.text(`CNPJ:`, 14, yOffset + 13);
 doc.text(`Solicitante:`, 106, yOffset + 13)
 yOffset += 6.5;
 
+doc.setFontSize(10);
 doc.setFillColor(226, 232, 240);
 doc.roundedRect(13, yOffset + 8, 85, 7, 2, 2, 'F');
 doc.setFont("Jakarta", "normal");
@@ -243,39 +245,39 @@ doc.autoTable({
 const finalYdaTabela = doc.lastAutoTable.finalY;
 let elementoY;
 
-if (finalYdaTabela + 30 > doc.internal.pageSize.getHeight() - 20) {
+if (finalYdaTabela + 38 > doc.internal.pageSize.getHeight() - 20) {
     doc.addPage();
     elementoY = 20; 
 } else {
     elementoY = finalYdaTabela + 3; 
 }
 
-doc.setFillColor(75, 85, 99);
-doc.setLineWidth(0.4);
-doc.roundedRect(10, elementoY + 2, 184.5 + 6, 22, 2, 2, 'D'); 
+doc.setDrawColor(15, 118, 110);
+doc.setLineWidth(0.2);
+doc.roundedRect(10, elementoY, 184.5 + 6, 22, 2, 2, 'D'); 
 doc.setFont("JakartaBold", "bold");
 doc.setFontSize(9);
 doc.setTextColor(15, 118, 110);
-doc.text(`Confira os benefícios:`, 12, elementoY + 6)
+doc.text(`Confira os benefícios:`, 12, elementoY + 4)
 
 doc.setFontSize(8);
 doc.setTextColor(75, 85, 99);
-doc.text("\u2022 Zero Burocracia -", 12, elementoY + 10)
-doc.text("\u2022 Atendimento Ágil -", 12, elementoY + 14)
-doc.text("\u2022 Faturas Fixas -", 12, elementoY + 18)
-doc.text("\u2022 Sem Renovação ou Reajuste Automático -", 12, elementoY + 22)
+doc.text("\u2022 Zero Burocracia -", 12, elementoY + 8)
+doc.text("\u2022 Atendimento Ágil -", 12, elementoY + 12)
+doc.text("\u2022 Faturas Fixas -", 12, elementoY + 16)
+doc.text("\u2022 Sem Renovação ou Reajuste Automático -", 12, elementoY + 20)
 
 doc.setFont("Jakarta", "normal");
 doc.setTextColor(75, 85, 99);
-doc.text("Esqueça 0800 ou lojas físicas, nós resolvemos com a operadora", 39, elementoY + 10)
-doc.text("Suporte dedicado através do WhatsApp, todos os dias", 41, elementoY + 14)
-doc.text("Proteção contra migrações de planos mais caros", 35, elementoY + 18)
-doc.text("Total controle sobre o plano e aumento de custos", 73, elementoY + 22)
+doc.text("Esqueça 0800 ou lojas físicas, nós resolvemos com a operadora", 39, elementoY + 8)
+doc.text("Conte com o suporte dedicado da equipe ACISC para apoiar em dúvidas, solicitações e falhas", 41, elementoY + 12)
+doc.text("Proteção contra migrações de planos mais caros", 35, elementoY + 16)
+doc.text("Total controle sobre o plano e aumento de custos", 73, elementoY + 20)
     
 doc.setFont("Jakarta", "normal");
 doc.setFontSize(5);
 doc.setTextColor(75, 85, 99);
-doc.text(`*Esta tabela de valores terá validade apenas se corresponder à última revisão oficializada pela ACISC.`, 64, elementoY + 28,); 
+doc.text(`*Esta tabela de valores terá validade apenas se corresponder à última revisão oficializada pela ACISC.`, 64, elementoY + 25,); 
 
 
 doc.save(`Proposta-${document.getElementById('empresa').value.replace(/[\/\\?%*:|"<> ]/g, '_')}.pdf`);
