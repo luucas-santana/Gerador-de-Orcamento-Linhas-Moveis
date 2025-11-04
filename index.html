@@ -31,6 +31,34 @@
         -webkit-appearance: none;
         margin: 0;
     }
+
+    .btnSwitch{
+        width: 100%;
+        color: #4b5563;
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        font-weight: 600;
+        padding: 0.5rem 0;
+        transition: ease-in 0.3s;
+    }
+
+    .btnSwitch:hover {
+        background-color: #d1fae5;
+        font-weight: 900;
+    }
+
+    .btnAtivo{
+        background-color: oklch(0.511 0.096 186.391);
+        color: #e5e7eb;
+        font-weight: 900;
+        border: 1px solid oklch(0.696 0.17 162.48);
+    }
+
+    .btnAtivo:hover{
+        background-color: #065750;
+        color: #e5e7eb;
+    }
+
     </style>
 </head>
 
@@ -45,178 +73,376 @@
         <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-emerald-900/70 to-emerald-900/50"></div>
     </div>
 
-<div class="h-18 w-full">
-    <div class="flex justify-center mb-8 mt-2 px-12 py-2">
-        <picture>
-            <a href="https://www.acisc.com.br/">
-                <img class="h-20" src="./src/Logotipo_ACISC_Branco_2025.webp" alt="ACISC logo">
-            </a>
-        </picture>
+    <div class="h-18 w-full">
+        <div class="flex justify-center mb-8 mt-2 px-12 py-2">
+            <picture>
+                <a href="https://www.acisc.com.br/">
+                    <img class="h-20" src="./src/Logotipo_ACISC_Branco_2025.webp" alt="ACISC logo">
+                </a>
+            </picture>
+        </div>
     </div>
-
-</div>
 
 
 <main>
-    
+    <!-- TROCA DE PAGINAS -->
+        <section class="w-1/4 mt-2 mx-auto bg-gray-50/70 flex justify-center shadow-2xl rounded-2xl">
+            <button id="btnPageProposta" class="btnSwitch btnAtivo rounded-l-2xl">Proposta</button>
+            <button id="btnPageForm" class="btnSwitch rounded-r-2xl">Roaming Internacional</button>
+        </section>
+    <!-- FIM TROCA DE PAGINAS -->
+
     <div class="max-w-5xl mt-2 mx-auto bg-gray-50/70 p-8 shadow-2xl rounded-2xl">
 
+    <!-- PAGE PROPOSTA -->
+
+    <section id="page-proposta" class="">
         <header>
-            <div class="text-center mb-8 w-full">
-                <h1 class="text-3xl font-bold text-gray-200 bg-teal-900 rounded-tl-2xl shadow-2xl rounded-br-2xl p-2 ">Gerador de Proposta ACCelular</h1>
+        <div class="text-center mb-8 w-full">
+            <h1 class="text-3xl font-bold text-gray-200 bg-teal-900 rounded-tl-2xl shadow-2xl rounded-br-2xl p-2 ">Gerador de Proposta ACCelular</h1>
+        </div>
+        </header>
+        <form id="orcamento-form">
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold mb-4 bg-teal-700 text-gray-200 rounded-tl-2xl rounded-br-2xl py-2 px-8 w-fit">Informações da Empresa</h2>
+                <hr class="my-4 border-t border-slate-00">
+                <div class="space-y-4">
+                    <div>
+                        <label for="nomeEmpresa" class="block text-sm font-semibold text-gray-600 mb-1">Empresa:</label>
+                        <div class="flex w-full items-center px-2 bg-gray-50/80 border border-gray-300 rounded-md ">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#4b5563">
+                                <path d="M94.62-136.92v-700h379.99v160h390.77v540H94.62Zm59.99-60h100.01v-100H154.61v100Zm0-160h100.01v-100H154.61v100Zm0-160h100.01v-100H154.61v100Zm0-160h100.01v-100H154.61v100Zm160 480h100.01v-100H314.61v100Zm0-160h100.01v-100H314.61v100Zm0-160h100.01v-100H314.61v100Zm0-160h100.01v-100H314.61v100Zm160 480h330.78v-420H474.61v100h87.7v60h-87.7v100h87.7v60h-87.7v100Zm175.39-260v-60h60v60h-60Zm0 160v-60h60v60h-60Z"/>
+                            </svg>
+                            <input type="text" id="empresa" name="nomeEmpresa" required class="text-gray-600 text-sm font-semibold bg-transparent focus:outline-none w-full p-2">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="cnpj" class="block text-sm font-semibold text-gray-600 mb-1">CNPJ:</label>
+                        <div class="flex w-full items-center px-2 bg-gray-50/80 border border-gray-300 rounded-md ">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#4b5563">
+                                <path d="m262.69-178.46 40-160h-152.3l15-60h152.3l40.77-163.08h-152.3l15-60h152.3l40-160h59.23l-40 160h165.39l40-160h59.23l-40 160h152.3l-15 60h-152.3l-40.77 163.08h152.3l-15 60h-152.3l-40 160h-59.23l40-160H361.92l-40 160h-59.23Zm114.23-220h165.39l40.77-163.08H417.69l-40.77 163.08Z"/>
+                            </svg>
+                            <input type="text" id="cnpj-proposta" name="cnpj" required class="inputCnpj text-gray-600 text-sm font-semibold bg-transparent focus:outline-none w-full p-2" placeholder="xx.xxx.xxx/xxxx-xx">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label for="solicitante" class="block text-sm font-semibold text-gray-600 mb-1">Solicitante:</label>
+                        <div class="flex w-full items-center px-2 bg-gray-50/80 border border-gray-300 rounded-md ">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#4b5563">
+                                <path d="M81.83-50.5v-63.33H878.5v63.33H81.83Zm84.67-116.17V-380.5q-36.83-78.33-52.92-136.08Q97.5-574.33 97.5-634.5q0-57.67 14.58-119.5 14.59-61.83 39.42-119.33 8.89-20.97 25.1-32.74 16.2-11.76 36.4-11.76 25.49 0 39.58 17.16 14.09 17.17 14.09 47.84l.16 118.31q-.33 46.19 15.59 87.28 15.91 41.09 44.41 72 28.5 30.91 67.5 48.82 39 17.92 85.67 17.92 73.83 0 131.67 11.5 57.83 11.5 98.33 34.67 40.5 23.16 61.92 58.5 21.41 35.33 21.41 84.5v152.66H166.5ZM229.83-230H730v-89.33q0-34.67-17.08-58.42-17.09-23.75-49.09-38.75-32.5-14.83-78.75-21.75t-105.11-6.92q-59.8 0-110.59-23.21-50.78-23.2-87.75-62.83-36.96-39.62-57.96-92.54-21-52.92-21-112.25v-86.67q-18.67 40.34-30.25 90.84-11.59 50.5-11.59 97.33 0 53.64 16.92 108.37 16.92 54.74 52.08 127.63V-230Zm250.23-331.83q-65.89 0-112.06-46.21t-46.17-112q0-65.79 46.21-112.13 46.21-46.33 112-46.33 65.79 0 112.13 46.28 46.33 46.27 46.33 112.16 0 65.89-46.28 112.06-46.27 46.17-112.16 46.17Zm-.03-63.34q39.64 0 67.39-27.61 27.75-27.62 27.75-67.25 0-39.64-27.69-67.39t-67.42-27.75q-39.73 0-67.31 27.69-27.58 27.69-27.58 67.42 0 39.73 27.61 67.31 27.62 27.58 67.25 27.58ZM328.5-166.67v-33.66q0-64.25 44.02-109.54 44.01-45.3 107.65-45.3h151.66v63.34H480q-36.74 0-62.45 26.9-25.72 26.91-25.72 64.6v33.66H328.5ZM480-230Zm0-490Z"/>
+                            </svg>   
+                            <input type="text" id="solicitante" name="solicitante" required class="text-gray-600 bg-transparent text-sm font-semibold focus:outline-none w-full p-2">
+                        </div>
+                    </div>
+                    
+                    <h2 class="text-2xl font-semibold mb-4 bg-teal-700 text-gray-200 rounded-tl-2xl rounded-br-2xl py-2 px-8 w-fit">Informações do Vendedor</h2>
+                    <hr class="my-4 border-t border-slate-00">
+                    <div>
+                        <label for="vendedor" class="block text-sm font-semibold text-gray-600 mb-1">Vendedor:</label>
+                        <div class="flex w-full items-center px-2 bg-gray-50/80 border border-gray-300 rounded-md ">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#4b5563">
+                                <path d="M480.01-480q-65.18 0-107.59-42.4Q330-564.8 330-629.99q0-65.18 42.4-107.59Q414.8-780 479.99-780q65.18 0 107.59 42.4Q630-695.2 630-630.01q0 65.18-42.4 107.59Q545.2-480 480.01-480ZM166-168.67v-96q0-36.16 18.08-62.83 18.09-26.67 47.38-40.62 64.54-29.55 125.62-44.63 61.09-15.08 122.92-15.08t122.58 15.25q60.75 15.25 125.35 44.7 30.05 13.93 48.06 40.54T794-264.51v95.84H166ZM229.33-232h501.34v-32.58q0-14.61-8.34-27.43-8.33-12.82-20.5-19.16-60.5-29.16-113.25-41.25-52.76-12.08-108.49-12.08-56.09 0-109.26 12.08-53.16 12.09-113 41.25-12.5 6.34-20.5 19.21-8 12.87-8 27.45V-232ZM480-543.33q37 0 61.83-24.84Q566.67-593 566.67-630t-24.84-61.83Q517-716.67 480-716.67t-61.83 24.84Q393.33-667 393.33-630t24.84 61.83Q443-543.33 480-543.33Zm0-86.67Zm0 398Z"/>
+                            </svg>   
+                            <input type="text" id="vendedor" name="vendedor" required class="text-gray-600 text-sm font-semibold bg-transparent focus:outline-none w-full p-2">
+                        </div>
+                    </div>
+                    <div class="flex flex-row space-x-24">
+                        <div class="w-full">
+                            <label for="whatsapp" class="block text-sm font-semibold text-gray-600 mb-1">WhatsApp:</label>
+                            <div class="flex w-full items-center px-2 bg-gray-50/80 border border-gray-300 rounded-md ">
+                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="#4b5563"  stroke-width="1.75"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-whatsapp"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9" />
+                                <path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1" />
+                                </svg>
+    
+                                <input type="text" name="whatsapp" id="whatsapp" class="numeroTelefone text-gray-600 text-sm font-semibold bg-transparent focus:outline-none w-full p-2">
+                            </div>
+                        </div>
+                        <div class="w-full">
+                            <label for="email" class="block text-sm font-semibold text-gray-600 mb-1">E-mail:</label>
+                            <div class="flex w-full items-center px-2 bg-gray-50/80 border border-gray-300 rounded-md ">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#4b5563">
+                                    <path d="M480-90q-80.91 0-152.07-30.76-71.15-30.77-123.79-83.5Q151.5-257 120.75-328.09 90-399.17 90-480q0-80.91 30.76-152.07 30.77-71.15 83.5-123.79Q257-808.5 328.09-839.25 399.17-870 480-870q80.91 0 152.07 30.76 71.15 30.77 123.79 83.5Q808.5-703 839.25-631.91 870-560.83 870-480v55.97q0 56.93-39.5 96.98Q791-287 734-287q-34.5 0-64.5-15.25T619-345q-27.5 28.5-63.75 43.25T480.14-287q-80.64 0-136.89-56.25Q287-399.5 287-480t56.25-136.75Q399.5-673 480-673t136.75 56.25Q673-560.5 673-480.15V-424q0 26 17.5 44t43.5 18q26 0 43.5-18t17.5-44v-56q0-131.5-91.75-223.25T480-795q-131.5 0-223.25 91.75T165-480q0 131.5 91.75 223.25T480-165h197v75H480Zm-.12-272q49.12 0 83.62-34.38 34.5-34.38 34.5-83.5t-34.38-83.62q-34.38-34.5-83.5-34.5t-83.62 34.38q-34.5 34.38-34.5 83.5t34.38 83.62q34.38 34.5 83.5 34.5Z"/>
+                                </svg>
+                                <input type="email" name="email" id="email" class="text-gray-600 text-sm font-semibold bg-transparent focus:outline-none w-full p-2">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    
+            <section class="mb-4 mt-16">
+                <h2 class="text-2xl font-semibold mt-4 mb-4 bg-teal-700 text-gray-200 rounded-tl-2xl rounded-br-2xl py-2 px-8 w-fit">Detalhes das Linhas Móveis</h2>
+                <hr class="bg-emerald-400">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 my-2">
+                    <div>
+                        <label for="telefone" class="block text-sm font-semibold text-gray-600 mb-1">Número de Telefone:</label>
+                        <input type="text" id="telefone" name="telefone" class="numeroTelefone w-full bg-gray-50/80 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="(xx) xxxxx-xxxx">
+                        
+                    </div>
+                    <div>
+                        <label for="operadora" class="block text-sm font-semibold text-gray-600 mb-1">Operadora:</label>
+                        <select id="operadora" name="operadora" class="w-full bg-gray-50/80 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                            <option value="" selected disabled>Selecione</option>
+                            <option value="VIVO">VIVO</option>
+                            <option value="CLARO">CLARO</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="processo" class="block text-sm font-semibold text-gray-600 mb-1">Processo:</label>
+                        <select id="processo" name="processo" class="w-full bg-gray-50/80 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                            <option value="" selected disabled>Selecione</option>
+                            <option value="Linha Nova">LN</option>
+                            <option value="Portabilidade">PN</option>
+                            <option value="Transferência">TT</option>
+                            <option value="Renovação">RN</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="valor" class="block text-sm font-semibold text-gray-600 mb-1">Dados:</label>
+                        <input type="number" id="dados" name="dados" class="w-full bg-gray-50/80 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="GB">
+                    </div>
+                    <div>
+                        <label for="valor" class="block text-sm font-semibold text-gray-600 mb-1">Valor:</label>
+                        <input type="text" id="valor" name="valor" class="moedaInput w-full bg-gray-50/80 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="$">
+                    </div>
+                </div>
+                <span id="aviso-proposta" class="text-red-600 text-sm my-2" style="display: none;"></span>
+    
+                <button type="button" id="btn-adicionar" class="mt-2 py-2 px-4 bg-emerald-600 text-white rounded-full hover:bg-emerald-700 active:scale-95 transform focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    <div class="flex flex-row space-x-2 font-medium">
+                        <p>Adicionar Linha</p>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="cursor-pointer" height="24px" viewBox="0 -960 960 960" width="24px" fill="#fff">
+                            <path d="M648.92-522.85v-126.07H522.85v-45.39h126.07V-820h45.39v125.69H820v45.39H694.31v126.07h-45.39ZM775.38-140Q669-140 556-193.69q-113-53.7-210.81-151.7-97.8-98-151.5-210.8Q140-669 140-775.38q0-19.12 12.64-31.87T184.23-820h114.13q15.64 0 26.41 10.19 10.77 10.2 15.15 26.35l23.85 107.18q2.08 15.13-1 27.2-3.08 12.08-11.69 20.31l-94.39 91.92q26.77 45.93 56.54 85.08t64.39 73.54q37.38 38.38 79.53 70.08 42.16 31.69 90.24 57.61l90.76-93.38q10-11 22.39-14.81 12.39-3.81 25.84-1.81l97.08 21.39q16.15 3.61 26.35 16.26Q820-310.24 820-294.23v110q0 18.95-12.75 31.59T775.38-140ZM234-578l82.54-80.08q1.54-1.53 2.11-4.23.58-2.69.2-5L297-768.46q-.38-3.08-2.5-4.62-2.11-1.53-5.19-1.53h-98.54q-2.31 0-3.85 1.53-1.53 1.54-1.53 3.85.84 41.62 12.92 88.69Q210.39-633.46 234-578Zm356.31 349.15q41 20.16 89.77 31.39 48.77 11.23 89.15 12.46 2.31 0 3.85-1.54 1.53-1.54 1.53-3.85v-98.15q0-3.08-1.53-5.19-1.54-2.12-4.62-2.5l-90.69-18.69q-2.31-.39-4.04.19-1.73.58-3.65 2.11l-79.77 83.77ZM234-578Zm356.31 349.15Z"/>
+                        </svg>
+                    </div>
+                </button>
+    
+                <h3 class="text-xl font-semibold text-slate-700 mt-8 mb-4">Pré-visualização do Orçamento</h3>
+                <table id="tabela" class="w-full bg-gray-50/80 border-collapse table-auto border-2 border-teal-700">
+                    <thead class="bg-teal-700 text-gray-200 text-center">
+                        <tr>
+                            <th class="p-3">Número de Telefone</th>
+                            <th class="p-3">Operadora</th>
+                            <th class="p-3">Processo</th>
+                            <th class="p-3">Dados</th>
+                            <th class="p-3 space-x-2">
+                                <span>Valor</span>
+                                <input type="checkbox" id="ocultar-valor" style="display: none; margin: 0 4px;">
+                                <i class="fas fa-eye" id="toggle-valor-icon" style="cursor: pointer;"></i>
+                            </th>
+                            <th class="td-apagar p-3">Opções</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpo-tabela-linhas" class="text-center">
+                        </tbody>
+                    <tfoot class="text-center border-2 border-teal-700">
+                        <tr >
+                            <td colspan="3" class="text-center text-slate-700 font-semibold">VALOR TOTAL:</td>
+                            <td id="valor-total" rowspan="2" class="text-center text-slate-700 font-black"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="text-xs text-slate-600" id="barraResumo"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </section>
+    
+            <div class="flex justify-end mt-8">
+                <button type="button" id="gerarPdf" class="px-12 py-3 bg-emerald-600 text-white font-bold text-lg rounded-lg hover:bg-emerald-700 active:scale-95 focus:outline-none focus:ring-2 focus:ring-green-500">
+                    <div class="flex flex-row space-x-2">
+                        <p>Gerar PDF</p>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#fff">
+                            <path d="M327.69-453.85h304.62v-60H327.69v60Zm0 115.39h304.62v-60H327.69v60Zm0 115.38h184.62v-60H327.69v60ZM252.31-100Q222-100 201-121q-21-21-21-51.31v-615.38Q180-818 201-839q21-21 51.31-21H570l210 210v477.69Q780-142 759-121q-21 21-51.31 21H252.31ZM540-620v-180H252.31q-4.62 0-8.46 3.85-3.85 3.84-3.85 8.46v615.38q0 4.62 3.85 8.46 3.84 3.85 8.46 3.85h455.38q4.62 0 8.46-3.85 3.85-3.84 3.85-8.46V-620H540ZM240-800v180-180V-160v-640Z"/>
+                        </svg>
+                    </div>
+                </button>
             </div>
+        </form>
+    </section>
+    <!-- FIM PAGE PROPOSTA -->
+
+    <!-- PAGE FORM -->
+    <section id="page-form" class="hidden">
+        <header>
+        <div class="text-center mb-8 w-full">
+            <h1 class="text-3xl font-bold text-gray-200 bg-teal-900 rounded-tl-2xl shadow-2xl rounded-br-2xl p-2 ">Roaming Internacional</h1>
+        </div>
         </header>
 
-        <form id="orcamento-form">
-                <section class="mb-8">
-                    <h2 class="text-2xl font-semibold mb-4 bg-teal-700 text-gray-200 rounded-tl-2xl rounded-br-2xl py-2 px-8 w-fit">Informações da Empresa</h2>
-                    <hr class="my-4 border-t border-slate-00">
-                    <div class="space-y-4">
-                        <div >
-                            <label for="nomeEmpresa" class="block text-sm font-medium text-gray-600 mb-1">Empresa:</label>
-                            <div class="flex w-full items-center px-2 bg-gray-50/80 border border-gray-300 rounded-md ">
-                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#4b5563">
-                                    <path d="M94.62-136.92v-700h379.99v160h390.77v540H94.62Zm59.99-60h100.01v-100H154.61v100Zm0-160h100.01v-100H154.61v100Zm0-160h100.01v-100H154.61v100Zm0-160h100.01v-100H154.61v100Zm160 480h100.01v-100H314.61v100Zm0-160h100.01v-100H314.61v100Zm0-160h100.01v-100H314.61v100Zm0-160h100.01v-100H314.61v100Zm160 480h330.78v-420H474.61v100h87.7v60h-87.7v100h87.7v60h-87.7v100Zm175.39-260v-60h60v60h-60Zm0 160v-60h60v60h-60Z"/>
-                                </svg>
-                                <input type="text" id="empresa" name="nomeEmpresa" required class="text-gray-600 text-sm font-semibold bg-transparent focus:outline-none w-full p-2">
-                            </div>
-                        </div>
-                        <div>
-                            <label for="cnpj" class="block text-sm font-medium text-gray-600 mb-1">CNPJ:</label>
-                            <div class="flex w-full items-center px-2 bg-gray-50/80 border border-gray-300 rounded-md ">
-                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#4b5563">
-                                    <path d="m262.69-178.46 40-160h-152.3l15-60h152.3l40.77-163.08h-152.3l15-60h152.3l40-160h59.23l-40 160h165.39l40-160h59.23l-40 160h152.3l-15 60h-152.3l-40.77 163.08h152.3l-15 60h-152.3l-40 160h-59.23l40-160H361.92l-40 160h-59.23Zm114.23-220h165.39l40.77-163.08H417.69l-40.77 163.08Z"/>
-                                </svg>
-                                <input type="text" id="cnpj" name="cnpj" required class="text-gray-600 text-sm font-semibold bg-transparent focus:outline-none w-full p-2" placeholder="xx.xxx.xxx/xxxx-xx">
-                            </div>
-                        </div>
-                        <div>
-                            <label for="vendedor" class="block text-sm font-medium text-gray-600 mb-1">Vendedor:</label>
-                            <div class="flex w-full items-center px-2 bg-gray-50/80 border border-gray-300 rounded-md ">
-                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#4b5563">
-                                    <path d="M480-492.31q-57.75 0-98.87-41.12Q340-574.56 340-632.31q0-57.75 41.13-98.87 41.12-41.13 98.87-41.13 57.75 0 98.87 41.13Q620-690.06 620-632.31q0 57.75-41.13 98.88-41.12 41.12-98.87 41.12ZM180-187.69v-88.93q0-29.38 15.96-54.42 15.96-25.04 42.66-38.5 59.3-29.07 119.65-43.61 60.35-14.54 121.73-14.54t121.73 14.54q60.35 14.54 119.65 43.61 26.7 13.46 42.66 38.5Q780-306 780-276.62v88.93H180Zm60-60h480v-28.93q0-12.15-7.04-22.5-7.04-10.34-19.11-16.88-51.7-25.46-105.42-38.58Q534.7-367.69 480-367.69q-54.7 0-108.43 13.11-53.72 13.12-105.42 38.58-12.07 6.54-19.11 16.88-7.04 10.35-7.04 22.5v28.93Zm240-304.62q33 0 56.5-23.5t23.5-56.5q0-33-23.5-56.5t-56.5-23.5q-33 0-56.5 23.5t-23.5 56.5q0 33 23.5 56.5t56.5 23.5Zm0-80Zm0 384.62Z"/>
-                                </svg>
-                                <input type="text" id="vendedor" name="vendedor" required class="text-gray-600 text-sm font-semibold bg-transparent focus:outline-none w-full p-2">
-                            </div>
-                        </div>
+        <div>
+            <h2 class="text-2xl font-semibold mb-4 bg-teal-700 text-gray-200 rounded-tl-2xl rounded-br-2xl py-2 px-8 w-fit">Dados da Empresa</h2>
+            <hr class="my-4 border-t border-slate-00">
 
-                        <div class="flex flex-row space-x-24">
-                            <div class="w-full">
-                                <label for="whatsapp" class="block text-sm font-medium text-gray-600 mb-1">WhatsApp:</label>
-                                <div class="flex w-full items-center px-2 bg-gray-50/80 border border-gray-300 rounded-md ">
-                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24px"  height="24px"  viewBox="0 0 24 24"  fill="none"  stroke="#4b5563"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-whatsapp">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9" />
-                                        <path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1" />
-                                    </svg>
-
-                                    <input type="text" name="whatsapp" id="whatsapp" class="text-gray-600 text-sm font-semibold bg-transparent focus:outline-none w-full p-2">
-                                </div>
-                            </div>
-                            <div class="w-full">
-                                <label for="email" class="block text-sm font-medium text-gray-600 mb-1">E-mail:</label>
-                                <div class="flex w-full items-center px-2 bg-gray-50/80 border border-gray-300 rounded-md ">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#4b5563">
-                                        <path d="M480-100q-78.77 0-148.14-29.92-69.37-29.92-120.68-81.21-51.31-51.29-81.25-120.63Q100-401.1 100-479.93q0-78.84 29.92-148.21t81.21-120.68q51.29-51.31 120.63-81.25Q401.1-860 479.93-860q78.84 0 148.21 29.93 69.37 29.92 120.68 81.22t81.25 120.65Q860-558.85 860-480v48.77q0 54.77-37.61 93T730-300q-35.39 0-65.62-17.31-30.23-17.31-47.77-47.62Q590.69-334 555.35-317 520-300 480-300q-74.92 0-127.46-52.54Q300-405.08 300-480q0-74.92 52.54-127.46Q405.08-660 480-660q74.92 0 127.46 52.54Q660-554.92 660-480v48.77q0 29.46 20.27 50.35Q700.54-360 730-360q29.46 0 49.73-20.88Q800-401.77 800-431.23V-480q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93h200v60H480Zm0-260q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35Z"/>
-                                    </svg>
-                                    <input type="email" name="email" id="email" class="text-gray-600 text-sm font-semibold bg-transparent focus:outline-none w-full p-2">
-                                </div>
-                            </div>
-                        </div>
+            <div class="flex flex-row space-x-4 mb-4">
+                <div class="w-full">
+                    <label for="" class="block text-sm font-semibold text-gray-600 mb-1">Empresa:</label>
+                    <div class="flex w-full items-center px-2 bg-gray-50/80 border border-gray-300 rounded-md ">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#4b5563">
+                            <path d="M94.62-136.92v-700h379.99v160h390.77v540H94.62Zm59.99-60h100.01v-100H154.61v100Zm0-160h100.01v-100H154.61v100Zm0-160h100.01v-100H154.61v100Zm0-160h100.01v-100H154.61v100Zm160 480h100.01v-100H314.61v100Zm0-160h100.01v-100H314.61v100Zm0-160h100.01v-100H314.61v100Zm0-160h100.01v-100H314.61v100Zm160 480h330.78v-420H474.61v100h87.7v60h-87.7v100h87.7v60h-87.7v100Zm175.39-260v-60h60v60h-60Zm0 160v-60h60v60h-60Z"/>
+                        </svg>
+                        <input type="text" maxlength="60" id="empresa-form" name="" required class="text-gray-600 text-sm font-semibold bg-transparent focus:outline-none w-full p-2">
                     </div>
-                </section>
-                <section class="mb-4 mt-16">
-                    <h2 class="text-2xl font-semibold mt-4 mb-4 bg-teal-700 text-gray-200 rounded-tl-2xl rounded-br-2xl py-2 px-8 w-fit">Detalhes das Linhas Móveis</h2>
-                    <hr class="bg-emerald-400">
-                    <div id="campos-adicionar-linha" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 my-4">
-                        <div>
-                            <label for="telefone" class="block text-sm font-medium text-gray-600 mb-1">Número de Telefone:</label>
-                            <input type="text" id="telefone" name="telefone" class="w-full bg-gray-50/80 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="(xx) xxxxx-xxxx">
-                            <span id="avisoTelefone" class="text-red-600 text-sm mt-1" style="display: none;"></span>
-                        </div>
-                        <div>
-                            <label for="operadora" class="block text-sm font-medium text-gray-600 mb-1">Operadora:</label>
-                            <select id="operadora" name="operadora" class="w-full bg-gray-50/80 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                                <option value="" selected disabled>Selecione</option>
-                                <option value="VIVO">VIVO</option>
-                                <option value="CLARO">CLARO</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="processo" class="block text-sm font-medium text-gray-600 mb-1">Processo:</label>
-                            <select id="processo" name="processo" class="w-full bg-gray-50/80 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                                <option value="" selected disabled>Selecione</option>
-                                <option value="Linha Nova">LN</option>
-                                <option value="Portabilidade">PN</option>
-                                <option value="Transferência">TT</option>
-                                <option value="Renovação">RN</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="valor" class="block text-sm font-medium text-gray-600 mb-1">Dados:</label>
-                            <input type="number" id="dados" name="dados" class="w-full bg-gray-50/80 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="GB">
-                        </div>
-                        <div>
-                            <label for="valor" class="block text-sm font-medium text-gray-600 mb-1">Valor:</label>
-                            <input type="text" id="valor" name="valor" class="w-full bg-gray-50/80 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="$">
-                        </div>
-                    </div>
-
-                    <button type="button" id="btn-adicionar" class="py-2 px-4 bg-emerald-600 text-white rounded-full hover:bg-emerald-700 active:scale-95 transform focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                        <div class="flex flex-row space-x-2 font-medium">
-                            <p>Adicionar Linha</p>
-                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#fff">
-                                <path d="M648.92-522.85v-126.07H522.85v-45.39h126.07V-820h45.39v125.69H820v45.39H694.31v126.07h-45.39ZM775.38-140Q669-140 556-193.69q-113-53.7-210.81-151.7-97.8-98-151.5-210.8Q140-669 140-775.38q0-19.12 12.64-31.87T184.23-820h114.13q15.64 0 26.41 10.19 10.77 10.2 15.15 26.35l23.85 107.18q2.08 15.13-1 27.2-3.08 12.08-11.69 20.31l-94.39 91.92q26.77 45.93 56.54 85.08t64.39 73.54q37.38 38.38 79.53 70.08 42.16 31.69 90.24 57.61l90.76-93.38q10-11 22.39-14.81 12.39-3.81 25.84-1.81l97.08 21.39q16.15 3.61 26.35 16.26Q820-310.24 820-294.23v110q0 18.95-12.75 31.59T775.38-140ZM234-578l82.54-80.08q1.54-1.53 2.11-4.23.58-2.69.2-5L297-768.46q-.38-3.08-2.5-4.62-2.11-1.53-5.19-1.53h-98.54q-2.31 0-3.85 1.53-1.53 1.54-1.53 3.85.84 41.62 12.92 88.69Q210.39-633.46 234-578Zm356.31 349.15q41 20.16 89.77 31.39 48.77 11.23 89.15 12.46 2.31 0 3.85-1.54 1.53-1.54 1.53-3.85v-98.15q0-3.08-1.53-5.19-1.54-2.12-4.62-2.5l-90.69-18.69q-2.31-.39-4.04.19-1.73.58-3.65 2.11l-79.77 83.77ZM234-578Zm356.31 349.15Z"/>
-                            </svg>
-                        </div>
-                    </button>
-                    <h3 class="text-xl font-semibold text-slate-700 mt-8 mb-4">Pré-visualização do Orçamento</h3>
-                    <table id="tabela" class="w-full bg-gray-50/80 border-collapse table-auto border-2 border-teal-700">
-                        <thead class="bg-teal-700 text-gray-200 text-center">
-                            <tr>
-                                <th class="p-3">Número de Telefone</th>
-                                <th class="p-3">Operadora</th>
-                                <th class="p-3">Processo</th>
-                                <th class="p-3">Dados</th>
-                                <th class="p-3 space-x-2">
-                                    <span>Valor</span>
-                                    <input type="checkbox" id="ocultar-valor" style="display: none; margin: 0 4px;">
-                                    <i class="fas fa-eye" id="toggle-valor-icon" style="cursor: pointer;"></i>
-                                </th>
-                                <th class="td-apagar p-3">Opções</th>
-                            </tr>
-                        </thead>
-                        <tbody id="corpo-tabela-linhas" class="text-center">
-                            </tbody>
-                        <tfoot class="text-center border-2 border-teal-700">
-                            <tr >
-                                <td colspan="3" class="text-center text-slate-700 font-semibold">VALOR TOTAL:</td>
-                                <td id="valor-total" rowspan="2" class="text-center text-slate-700 font-black"></td>
-                            </tr>
-                            <tr>
-                                <td colspan="3" class="text-xs text-slate-600" id="barraResumo"></td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </section>
-                <div class="flex justify-end mt-8">
-                    <button type="button" id="gerarPdf" class="px-12 py-3 bg-emerald-600 text-white font-bold text-lg rounded-lg hover:bg-emerald-700 active:scale-95 focus:outline-none focus:ring-2 focus:ring-green-500">
-                        <div class="flex flex-row space-x-2">
-                            <p>Gerar PDF</p>
-                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#fff">
-                                <path d="M327.69-453.85h304.62v-60H327.69v60Zm0 115.39h304.62v-60H327.69v60Zm0 115.38h184.62v-60H327.69v60ZM252.31-100Q222-100 201-121q-21-21-21-51.31v-615.38Q180-818 201-839q21-21 51.31-21H570l210 210v477.69Q780-142 759-121q-21 21-51.31 21H252.31ZM540-620v-180H252.31q-4.62 0-8.46 3.85-3.85 3.84-3.85 8.46v615.38q0 4.62 3.85 8.46 3.84 3.85 8.46 3.85h455.38q4.62 0 8.46-3.85 3.85-3.84 3.85-8.46V-620H540ZM240-800v180-180V-160v-640Z"/>
-                            </svg>
-                        </div>
-                    </button>
                 </div>
-            </form>
-</main>
-</div>
 
-<footer class="max-w-4xl mt-2 mx-auto bg-transparent text-center p-8 rounded-lg shadow-lg">
+                <div class="w-1/2">
+                    <label for="cnpj" class="block text-sm font-semibold text-gray-600 mb-1">CNPJ:</label>
+                    <div class="flex w-full items-center px-2 bg-gray-50/80 border border-gray-300 rounded-md ">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#4b5563">
+                            <path d="m262.69-178.46 40-160h-152.3l15-60h152.3l40.77-163.08h-152.3l15-60h152.3l40-160h59.23l-40 160h165.39l40-160h59.23l-40 160h152.3l-15 60h-152.3l-40.77 163.08h152.3l-15 60h-152.3l-40 160h-59.23l40-160H361.92l-40 160h-59.23Zm114.23-220h165.39l40.77-163.08H417.69l-40.77 163.08Z"/>
+                        </svg>
+                        <input type="text" id="cnpj-form" name="cnpj" required class="inputCnpj text-gray-600 text-sm font-semibold bg-transparent focus:outline-none w-full p-2" placeholder="xx.xxx.xxx/xxxx-xx">
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-row space-x-4 mb-4">
+                <div class="w-full">
+                    <label for="endereco" class="block text-sm font-semibold text-gray-600 mb-1">Endereço:</label>
+                    <div class="flex w-full items-center px-2 bg-gray-50/80 border border-gray-300 rounded-md ">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#4b5563">
+                            <path d="M480-80q-106 0-173-33.5T240-200q0-24 14.5-44.5T295-280l63 59q-9 4-19.5 9T322-200q13 16 60 28t98 12q51 0 98.5-12t60.5-28q-7-8-18-13t-21-9l62-60q28 16 43 36.5t15 45.5q0 53-67 86.5T480-80Zm1-220q99-73 149-146.5T680-594q0-102-65-154t-135-52q-70 0-135 52t-65 154q0 67 49 139.5T481-300Zm-1 100Q339-304 269.5-402T200-594q0-71 25.5-124.5T291-808q40-36 90-54t99-18q49 0 99 18t90 54q40 36 65.5 89.5T760-594q0 94-69.5 192T480-200Zm0-320q33 0 56.5-23.5T560-600q0-33-23.5-56.5T480-680q-33 0-56.5 23.5T400-600q0 33 23.5 56.5T480-520Zm0-80Z"/>
+                        </svg>
+    
+                        <input type="text" name="endereco" id="endereco-form" class="text-gray-600 text-sm font-semibold bg-transparent focus:outline-none w-full p-2">
+                    </div>
+                </div>
+                <div class="w-full">
+                    <label for="cep" class="block text-sm font-semibold text-gray-600 mb-1">CEP:</label>
+                    <div class="flex w-full items-center px-2 bg-gray-50/80 border border-gray-300 rounded-md ">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#4b5563">
+                            <path d="M480-80q-106 0-173-33.5T240-200q0-24 14.5-44.5T295-280l63 59q-9 4-19.5 9T322-200q13 16 60 28t98 12q51 0 98.5-12t60.5-28q-7-8-18-13t-21-9l62-60q28 16 43 36.5t15 45.5q0 53-67 86.5T480-80Zm1-220q99-73 149-146.5T680-594q0-102-65-154t-135-52q-70 0-135 52t-65 154q0 67 49 139.5T481-300Zm-1 100Q339-304 269.5-402T200-594q0-71 25.5-124.5T291-808q40-36 90-54t99-18q49 0 99 18t90 54q40 36 65.5 89.5T760-594q0 94-69.5 192T480-200Zm0-320q33 0 56.5-23.5T560-600q0-33-23.5-56.5T480-680q-33 0-56.5 23.5T400-600q0 33 23.5 56.5T480-520Zm0-80Z"/>
+                        </svg>
+
+                        <input type="text" name="cep" id="cep-form" class="inputCep text-gray-600 text-sm font-semibold bg-transparent focus:outline-none w-full p-2">
+                    </div>
+                </div>
+                <div class="w-full">
+                    <label for="cidade" class="block text-sm font-semibold text-gray-600 mb-1">Cidade:</label>
+                    <div class="flex w-full items-center px-2 bg-gray-50/80 border border-gray-300 rounded-md ">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#4b5563">
+                            <path d="M480-80q-106 0-173-33.5T240-200q0-24 14.5-44.5T295-280l63 59q-9 4-19.5 9T322-200q13 16 60 28t98 12q51 0 98.5-12t60.5-28q-7-8-18-13t-21-9l62-60q28 16 43 36.5t15 45.5q0 53-67 86.5T480-80Zm1-220q99-73 149-146.5T680-594q0-102-65-154t-135-52q-70 0-135 52t-65 154q0 67 49 139.5T481-300Zm-1 100Q339-304 269.5-402T200-594q0-71 25.5-124.5T291-808q40-36 90-54t99-18q49 0 99 18t90 54q40 36 65.5 89.5T760-594q0 94-69.5 192T480-200Zm0-320q33 0 56.5-23.5T560-600q0-33-23.5-56.5T480-680q-33 0-56.5 23.5T400-600q0 33 23.5 56.5T480-520Zm0-80Z"/>
+                        </svg>
+
+                        <input type="text" name="cidade" id="cidade-form" class="text-gray-600 text-sm font-semibold bg-transparent focus:outline-none w-full p-2">
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-row space-x-24 mb-8">
+                <div class="w-full">
+                    <label for="" class="block text-sm font-semibold text-gray-600 mb-1">Responsável:</label>
+                    <div class="flex w-full items-center px-2 bg-gray-50/80 border border-gray-300 rounded-md ">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#4b5563">
+                                <path d="M480.01-480q-65.18 0-107.59-42.4Q330-564.8 330-629.99q0-65.18 42.4-107.59Q414.8-780 479.99-780q65.18 0 107.59 42.4Q630-695.2 630-630.01q0 65.18-42.4 107.59Q545.2-480 480.01-480ZM166-168.67v-96q0-36.16 18.08-62.83 18.09-26.67 47.38-40.62 64.54-29.55 125.62-44.63 61.09-15.08 122.92-15.08t122.58 15.25q60.75 15.25 125.35 44.7 30.05 13.93 48.06 40.54T794-264.51v95.84H166ZM229.33-232h501.34v-32.58q0-14.61-8.34-27.43-8.33-12.82-20.5-19.16-60.5-29.16-113.25-41.25-52.76-12.08-108.49-12.08-56.09 0-109.26 12.08-53.16 12.09-113 41.25-12.5 6.34-20.5 19.21-8 12.87-8 27.45V-232ZM480-543.33q37 0 61.83-24.84Q566.67-593 566.67-630t-24.84-61.83Q517-716.67 480-716.67t-61.83 24.84Q393.33-667 393.33-630t24.84 61.83Q443-543.33 480-543.33Zm0-86.67Zm0 398Z"/>
+                            </svg>
+                        <input type="text" id="socio-form" name="" required class="text-gray-600 text-sm font-semibold bg-transparent focus:outline-none w-full p-2">
+                    </div>
+                </div>
+
+                <div class="w-full">
+                    <label for="inputCpf" class="block text-sm font-semibold text-gray-600 mb-1">CPF:</label>
+                    <div class="flex w-full items-center px-2 bg-gray-50/80 border border-gray-300 rounded-md ">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#4b5563"><path d="M560-440h200v-80H560v80Zm0-120h200v-80H560v80ZM200-320h320v-22q0-45-44-71.5T360-440q-72 0-116 26.5T200-342v22Zm160-160q33 0 56.5-23.5T440-560q0-33-23.5-56.5T360-640q-33 0-56.5 23.5T280-560q0 33 23.5 56.5T360-480ZM160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm0-80h640v-480H160v480Zm0 0v-480 480Z"/></svg>
+                        <input type="text" id="cpf-form" name="inputCpf" required class="text-gray-600 text-sm font-semibold bg-transparent focus:outline-none w-full p-2" placeholder="xxx.xxx.xxx-xx">
+                    </div>
+                </div>
+            </div>
+
+
+            <h2 class="text-2xl font-semibold mb-4 bg-teal-700 text-gray-200 rounded-tl-2xl rounded-br-2xl py-2 px-8 w-fit">Dados da Contratação</h2>
+            <hr class="my-4 border-t border-slate-00">
+            <div class="flex flex-row space-x-4">
+                <div class="w-2/3">
+                    <label for="inputNumeroForm" class="block text-sm font-semibold text-gray-600 mb-1">Número:</label>
+                    <div class="flex mb-2 w-full items-center px-2 bg-gray-50/80 border border-gray-300 rounded-md ">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#4b5563">
+                            <path d="M798-120q-125 0-247-54.5T329-329Q229-429 174.5-551T120-798q0-18 12-30t30-12h162q14 0 25 9.5t13 22.5l26 140q2 16-1 27t-11 19l-97 98q20 37 47.5 71.5T387-386q31 31 65 57.5t72 48.5l94-94q9-9 23.5-13.5T670-390l138 28q14 4 23 14.5t9 23.5v162q0 18-12 30t-30 12ZM241-600l66-66-17-94h-89q5 41 14 81t26 79Zm358 358q39 17 79.5 27t81.5 13v-88l-94-19-67 67ZM241-600Zm358 358Z"/>
+                        </svg>
+                        <input type="text" name="numero" id="inputNumeroForm" class="text-gray-600 text-sm font-semibold bg-transparent focus:outline-none w-full p-2">
+                        
+                        <button id="btnAddLinha" title="Adicionar Linha" class="cursor-pointer hover:scale-125 transition duration-300 ease-out">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#059669">
+                                    <path d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z"/>
+                            </svg>
+                        </button> 
+    
+                    </div>
+                        <span id="aviso-form" class="text-red-600 text-sm" style="display: none;"></span>
+                </div>
+
+                <div class="w-1/2">
+                    <label for="periodo" class="block text-sm font-semibold text-gray-600 mb-1">Período:</label>
+                    <select id="inputPeriodo" required name="periodo" class="w-full bg-gray-50/80 p-2 border border-gray-300 rounded-md focus:outline-none">
+                        <option value="" selected disabled>Selecione</option>
+                        <option value="Mensal">Mensal</option>
+                        <option value="Diária">Diária</option>
+                    </select>
+                </div>
+
+                <div class="w-1/2">
+                    <label for="inputValor" class="block text-sm font-semibold text-gray-600 mb-1">Valor:</label>
+                    <div class="flex w-full items-center px-2 bg-gray-50/80 border border-gray-300 rounded-md ">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#4b5563">
+                            <path d="M441-120v-86q-53-12-91.5-46T293-348l74-30q15 48 44.5 73t77.5 25q41 0 69.5-18.5T587-356q0-35-22-55.5T463-458q-86-27-118-64.5T313-614q0-65 42-101t86-41v-84h80v84q50 8 82.5 36.5T651-650l-74 32q-12-32-34-48t-60-16q-44 0-67 19.5T393-614q0 33 30 52t104 40q69 20 104.5 63.5T667-358q0 71-42 108t-104 46v84h-80Z"/>
+                        </svg>
+                        <input type="text" name="inputValor" id="inputValorForm" class="moedaInput focus:outline-none text-gray-600 text-sm font-semibold bg-transparent w-full p-2">
+                    </div>
+                </div>
+                <div class="w-1/2">
+                    <label for="data-inicio" class="block text-sm font-semibold text-gray-600 mb-1">Data Início :</label>
+                    <div class="flex w-full items-center px-2 bg-gray-50/80 border border-gray-300 rounded-md ">
+                    
+                    <input type="date" name="dataInicio" id="dataInicio" class="focus:outline-none text-gray-600 text-sm font-semibold bg-transparent w-full p-2">
+                    </div>
+                </div>
+                <div class="w-1/2">
+                    <label for="dataFim" class="block text-sm font-semibold text-gray-600 mb-1">Data Fim:</label>
+                    <div class="flex w-full items-center px-2 bg-gray-50/80 border border-gray-300 rounded-md ">
+                       
+                    <input type="date" name="dataFim" id="dataFim" max="2090-12-31" required class="focus:outline-none text-gray-600 text-sm font-semibold bg-transparent w-full p-2">
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex">
+            </div>
+
+        </div>
+
+        <div class="mt-4 bg-gray-200 border-2 text-slate-600 p-4 border-emerald-500 rounded-2xl">
+            <p class="text-teal-700 font-bold">Roaming Internacional VIVO Travel - MUNDO</p>
+            <div class="flex flex-row gap-2">
+                <p><b>Linha(s):</b></p>
+                <DIV id="linhasPrev" class="grid grid-cols-5 gap-2"></DIV>
+            </div>
+        </div>
+
+        <div class="flex justify-end mt-8">
+            <button type="button" id="gerarPdf-form" class="px-12 py-3 bg-emerald-600 text-white font-bold text-lg rounded-lg hover:bg-emerald-700 active:scale-95 focus:outline-none focus:ring-2 focus:ring-green-500">
+                <div class="flex flex-row space-x-2">
+                    <p>Gerar PDF</p>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#fff">
+                        <path d="M327.69-453.85h304.62v-60H327.69v60Zm0 115.39h304.62v-60H327.69v60Zm0 115.38h184.62v-60H327.69v60ZM252.31-100Q222-100 201-121q-21-21-21-51.31v-615.38Q180-818 201-839q21-21 51.31-21H570l210 210v477.69Q780-142 759-121q-21 21-51.31 21H252.31ZM540-620v-180H252.31q-4.62 0-8.46 3.85-3.85 3.84-3.85 8.46v615.38q0 4.62 3.85 8.46 3.84 3.85 8.46 3.85h455.38q4.62 0 8.46-3.85 3.85-3.84 3.85-8.46V-620H540ZM240-800v180-180V-160v-640Z"/>
+                    </svg>
+                </div>
+            </button>
+        </div>
+
+    </section>
+    <!-- FIM PAGE FORM -->
+
+    </div>
+
+
+</main>
+
+<footer class="max-w-4xl mt-2 mx-auto bg-transparent text-center p-8 rounded-lg">
     <p class="text-slate-400 font-semibold text-sm">2025 - Desenvolvido por Lucas Santana</p>
 </footer>
 
 
-<script src="script.js"></script>
+<script type="module" src="script.js"></script>
+<script type="module" src="form.js"></script>
 </body>
 </html>

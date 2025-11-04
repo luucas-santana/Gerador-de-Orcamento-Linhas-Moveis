@@ -1,35 +1,157 @@
-import { formatarMoeda, formatarCnpj, formatarTelefone, formatarCep } from "./formatador.js";
+import {formatarTelefone, formatarCpf} from "./formatador.js";
 
 document.addEventListener('DOMContentLoaded', () => {
-    const btnAdd = document.getElementById('btn-adicionar');
-    const corpoTabela = document.getElementById('corpo-tabela-linhas');
-    const dadosDaTabela = [];
-    const valorTotal = document.getElementById('valor-total');
-    const botaoGerarPdf = document.getElementById('gerarPdf');
-    const inputValor = document.querySelectorAll('.moedaInput')
-    const inputTelefone = document.querySelectorAll('.numeroTelefone');
-    const inputCnpj = document.querySelectorAll('.inputCnpj')
-    const inputDados = document.getElementById('dados');
-    const inputCep = document.querySelectorAll('.inputCep')
+    const inputTelefone = document.getElementById('inputNumeroForm');
+    const numeros = [];
+    const linhaInserida = document.getElementById('linhasPrev');
+    const btnAdd = document.getElementById('btnAddLinha');
+    const dataInicio = document.getElementById('dataInicio');
+    const dataFim = document.getElementById('dataFim');
+    const aviso = document.getElementById('aviso-form');
+    const selectPeriodo = document.getElementById('inputPeriodo');
+    const inputValor = document.getElementById ('inputValorForm');
+    const inputCpf = document.getElementById('cpf-form');
+    const botaoGerarPdf = document.getElementById('gerarPdf-form');
 
-    let tabelaPreenchida = false;
+    function adicionarLinha() {
+        let telefone = inputTelefone.value;
+
+        if(!inputValor.value || !selectPeriodo.value || !inputTelefone.value || !dataInicio.value){
+            aviso.textContent = 'Preencha todos os campos'
+            aviso.style.display = 'block';
+            return;
+        }
+
+        if (telefone === '') {
+            return;
+        }
+
+         if (numeros.includes(telefone)) {
+            aviso.textContent = 'Linha já incluída';
+            aviso.style.display = 'block';
+            return;
+        }
+
+        if (telefone.length >= 14) {
+            numeros.push(telefone);
+            inputTelefone.value = '';
+
+            console.log('linha incluida:', numeros);
+
+            aviso.textContent = '';
+            aviso.style.display = 'none';
+        } else {
+            if (telefone.length < 14) {
+                aviso.textContent = 'Verifique o número';
+                aviso.style.display = 'block';
+                return;
+            };
+        };
+        atualizar();
+    }
+
+    function excluirLinha(linhaExcluir){
+        const index = numeros.indexOf(linhaExcluir);
+
+        if (index > -1) {
+            numeros.splice(index, 1);
+        }
+
+        atualizar();
+    }
+
+    function atualizar() {
+        const tagLinha = numeros.map(linha => `
+            <span class='w-[145px] bg-emerald-50 flex flex-row space-x-2 py-px border-2 border-emerald-500 rounded-2xl justify-center items-center' ">
+                <span class='font-semibold text-emerald-800 align-center text-xs'>${linha}</span>
+                <button type="button" class="text-red-600 text-xs cursor-pointer" data-numero="${linha}">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" class="pointer-events-none" fill="#DC2626">
+                    <path d="m336-280 144-144 144 144 56-56-144-144 144-144-56-56-144 144-144-144-56 56 144 144-144 144 56 56ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/>
+                    </svg>
+                </button>
+            </span>
+            `).join('');
+
+            linhaInserida.innerHTML = tagLinha;
+    }
+
+    function liberarDataFim() {
+        const periodo = selectPeriodo.value; 
+
+        if (periodo === "Diária") {
+            dataFim.disabled = false;
+            dataFim.style.cursor = 'auto';
+            dataFim.style.opacity = '1';
+        } else {
+            dataFim.disabled = true;
+            dataFim.style.cursor = 'not-allowed'; 
+            dataFim.style.opacity = '0.7';
+            dataFim.value = '';
+        }
+    }
+    selectPeriodo.addEventListener('change', liberarDataFim);
+
+    liberarDataFim();
+
+    linhaInserida.addEventListener('click', (event) => {
+        const target = event.target;
+
+        if (target.classList.contains('text-red-600')) {
+            const telefone = target.getAttribute('data-numero');
+
+            excluirLinha(telefone);
+        }
+    });
+
+    if (btnAdd) {
+        btnAdd.addEventListener('click', adicionarLinha);
+    }
+
+    atualizar();
+
+    if (inputTelefone) {
+        inputTelefone.addEventListener('input', function() {
+            const valorFormatado = formatarTelefone(this.value);
+            this.value = valorFormatado;
+        });
+    }
+
+    if (inputCpf) {
+        inputCpf.addEventListener('input', function() {
+            const valorFormatado = formatarCpf(this.value);
+            this.value = valorFormatado
+        })
+    }
 
 
 function gerarPdf() {
-    const empresa = document.getElementById('empresa').value;
-    const vendedor = document.getElementById('vendedor').value;
-    const cnpj = document.getElementById('cnpj-proposta').value;
-    const whatsapp = document.getElementById('whatsapp').value;
-    const email = document.getElementById('email').value;
-    const solicitante = document.getElementById('solicitante').value;
-    const ocultarValor = document.getElementById('ocultar-valor').checked;
-    
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
+const inputEmpresa = document.getElementById('empresa-form').value;
+const inputCnpj = document.getElementById('cnpj-form').value;
+const inputEndereco = document.getElementById('endereco-form').value;
+const inputCep = document.getElementById('cep-form').value;
+const inputCidade = document.getElementById('cidade-form').value;
+const dataInicio = document.getElementById('dataInicio').value.split('-').reverse().join('/');
+const dataFim = document.getElementById('dataFim').value.split('-').reverse().join('/');
+const selectPeriodo = document.getElementById('inputPeriodo').value;
+const inputSocio = document.getElementById('socio-form').value;
+const inputCpf = document.getElementById('cpf-form').value;
+const meses = [
+    "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+    "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+];
+const hoje = new Date();
+const dia = String(hoje.getDate()).padStart(2, '0');
+const mes = meses[hoje.getMonth()];
+const ano = hoje.getFullYear();
 
-    const pageWidth = doc.internal.pageSize.getWidth();
-    
-    let yOffset = 15; 
+
+const { jsPDF } = window.jspdf;
+const doc = new jsPDF();
+
+const pageHeight = doc.internal.pageSize.getHeight();
+const pageWidth = doc.internal.pageSize.getWidth();
+
+let yOffset = 15; 
 
 doc.setFillColor(15, 118, 110); 
 doc.rect(0, 0, pageWidth, 45, 'F'); 
@@ -39,16 +161,14 @@ doc.addImage(logoBase64, 'PNG', 10, 5, 50, 16);
 doc.setFontSize(10);
 doc.setTextColor(255, 255, 255); 
 doc.setFont("Jakarta", "normal");
-// doc.text(".", 10, 5 + 16 + 4);
 yOffset += 10;
     
 doc.setFontSize(10);
 doc.setTextColor(255, 255, 255);
     
 doc.setFont("JakartaBold", "bold");
-doc.text("Gestão de Telefonia Móvel", pageWidth - 10, 10, { align: 'right' });
+doc.text("Contratação de Roaming Internacional VIVO", pageWidth - 10, 10, { align: 'right' });
 doc.setFontSize(8);
-doc.text(`Data: ${new Date().toLocaleDateString('pt-BR')}`, pageWidth - 10, 17, { align: 'right' });
 
 doc.setDrawColor(15, 118, 110);
 doc.setLineWidth(0.8);
@@ -56,10 +176,15 @@ doc.setFillColor(255, 255, 255);
 doc.roundedRect(10, yOffset + 6, 190, 40, 2, 2, 'FD')
 
 
+
 doc.setFontSize(12);
 doc.setFont("JakartaBold", "bold");
 doc.setTextColor(15, 118, 110);
 doc.text(`Empresa:`, 14, yOffset + 13);
+
+doc.setFontSize(12);
+doc.setTextColor(15, 118, 110);
+doc.text(`CNPJ:`, 140, yOffset + 13);
 yOffset += 6.5;
 
 doc.setDrawColor(15, 118, 110); 
@@ -68,209 +193,195 @@ doc.setFillColor(226, 232, 240);
 doc.setFontSize(10);
 
 doc.setFillColor(226, 232, 240);
-doc.roundedRect(13, yOffset + 8, 184, 7, 2, 2, 'FD');
-doc.setFontSize(10);
+doc.roundedRect(13, yOffset + 8, 125, 7, 2, 2, 'FD');
 doc.setTextColor(75, 85, 99);
-doc.text(`${empresa}`, 14, yOffset + 13);
+doc.text(`${inputEmpresa}`, 15, yOffset + 13);
 
+doc.setFillColor(226, 232, 240);
+doc.roundedRect(140, yOffset + 8, 55, 7, 2, 2, 'FD');
+doc.setTextColor(75, 85, 99);
+doc.text(`${inputCnpj}`, 142, yOffset + 13);
 yOffset += 11;
-
 
 doc.setFontSize(12);
 doc.setFont("JakartaBold", "bold");
 doc.setTextColor(15, 118, 110);
-doc.text(`CNPJ:`, 14, yOffset + 13);
 
-doc.text(`Solicitante:`, 106, yOffset + 13)
+doc.text(`Endereço:`, 14, yOffset + 13);
+doc.text(`CEP:`, 130, yOffset + 13)
+doc.text(`Cidade:`, 155, yOffset + 13)
+
 yOffset += 6.5;
 
+
+doc.setFontSize(10);
 doc.setDrawColor(15, 118, 110); 
 doc.setLineWidth(0.4); 
 doc.setFillColor(226, 232, 240);
-doc.setFontSize(10);
 
-doc.setFillColor(226, 232, 240);
-doc.roundedRect(13, yOffset + 8, 85, 7, 2, 2, 'FD');
+doc.roundedRect(13, yOffset + 8, 115, 7, 2, 2, 'FD'); 
 doc.setTextColor(75, 85, 99);
-doc.setFontSize(10);
-doc.text(`${cnpj}`, 15, yOffset + 13);
-
+doc.text(`${inputEndereco}`, 15, yOffset + 13);
 
 doc.setFillColor(226, 232, 240);
-doc.roundedRect(105, yOffset + 8, 91, 7, 2, 2, 'FD');
-doc.text(`${solicitante}`, 107, yOffset + 13);
-yOffset += 23;
+doc.roundedRect(130, yOffset + 8, 23, 7, 2, 2, 'FD');
+doc.setTextColor(75, 85, 99);
+doc.text(`${inputCep}`, 132, yOffset + 13);
 
-const totalNumerico = dadosDaTabela.reduce((soma, item) => {
-    return soma + (parseFloat(item.valor) || 0);
-}, 0);
-const totalFormatado = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(totalNumerico);
+doc.setFillColor(226, 232, 240);
+doc.roundedRect(155, yOffset + 8, 39, 7, 2, 2, 'FD');
+doc.setTextColor(75, 85, 99);
+doc.text(`${inputCidade}`, 157, yOffset + 13);
+yOffset += 28;
 
-let headers;
-let data;
-let footer;
-
-if (ocultarValor) {
-    headers = [["Telefone", "Operadora", "Processo", "Dados"]];
-    data = dadosDaTabela.map(item => {
-        const telefoneParaPDF = (item.processo === 'Linha Nova' && !item.telefone) ? 'Número Novo' : item.telefone;
-        return [
-            telefoneParaPDF,
-            item.operadora,
-            item.processo,
-            `${item.dados} GB`
-        ];
-    });
-
-    footer = [
-        [{ content: 'Valor Total:', colSpan: 3, styles: { halign: 'center' } }, totalFormatado]
-    ];
-} else {
-    headers = [["Telefone", "Operadora", "Processo", "Dados", "Valor"]];
-    data = dadosDaTabela.map(item => {
-        const telefoneParaPDF = (item.processo === 'Linha Nova' && !item.telefone) ? 'Número Novo' : item.telefone;
-        return [
-            telefoneParaPDF,
-            item.operadora,
-            item.processo,
-            `${item.dados} GB`,
-            `R$ ${item.valor}`,
-        ];
-    });
-    footer = [
-        [{ content: 'Valor Total:', colSpan: 4, styles: { halign: 'center' } }, totalFormatado]
-    ];
-}
-
-    doc.setFontSize(15);
-    doc.setFillColor(15, 118, 110);
-    doc.setTextColor(255, 255, 255);
-    doc.setFont("JakartaBold", "bold");
-    doc.roundedRect(
-    (doc.internal.pageSize.getWidth() - (doc.getTextWidth(`Proposta ACCelular - ACISC`) + 10)) / 2, 
-    yOffset + 6,
-    doc.getTextWidth(`Proposta ACCelular - ACISC`) + 10, 7, 2, 2, 'FD');
-
-    doc.text(
-        `Proposta ACCelular - ACISC`, 
-        doc.internal.pageSize.getWidth() / 2,
-        yOffset + 11, 
-        { align: 'center' }
-    );
-    yOffset += 15;
-
-doc.autoTable({
-    startY: yOffset,
-    margin: {left: 10, right: 10, bottom: 33},
-    head: headers,
-    body: data,
-    foot: footer,
-    theme: 'striped',
-    showFoot: 'lastPage',
-    styles: {
-        font: 'Jakarta',
-        fontStyle: 'normal',
-        fontSize: 11,
-        cellPadding: 2,
-        valign: 'middle',
-        halign: 'center',
-        lineColor: [15, 118, 110],
-        lineWidth: 0.1,
-    },
-    headStyles: {
-        font: 'JakartaBold',
-        fontStyle: 'bold',
-        fillColor: [15, 118, 110],
-        textColor: [255, 255, 255],
-        lineColor: [15, 118, 110],
-        lineWidth: 0.1,
-    },
-    footStyles: {
-        font: 'JakartaBold',
-        fontStyle: 'bold',
-        fillColor: [255, 255, 255],
-        textColor: [75, 85, 99],
-        lineColor: [15, 118, 110],
-        lineWidth: 0.1,
-    },
-
- didDrawPage: function (data) {
-    const pageHeight = doc.internal.pageSize.getHeight();
-    const pageWidth = doc.internal.pageSize.getWidth();
-    
-    doc.setFillColor(15, 118, 110);
-    doc.rect(0, pageHeight - 14, pageWidth, 15, 'F');
-
-    doc.setFontSize(11);
-    doc.setFont("JakartaBold", "bold");
-    doc.setFillColor(15, 118, 110);
-    doc.setTextColor(255, 255, 255);
-    doc.roundedRect(8, pageHeight - 32, doc.getTextWidth(vendedor) + 4, 6, 2, 2, 'FD');
-    doc.text(vendedor, 10, pageHeight - 28); 
-    
-    doc.setFontSize(9);
-    doc.setTextColor(75, 85, 99);
-    doc.setFont("Jakarta", "normal");
-    doc.text(`Whatsapp: ${whatsapp}`, 10, pageHeight - 28 + 6);
-
-    doc.text(`E-mail: ${email}`, 10, pageHeight - 28 + 6 + 4);
-        
-        doc.setFontSize(7);
-        doc.setTextColor(168, 205, 202);
-
-        doc.text(
-            [
-                'Associação Comercial e Industrial de São Carlos - ACISC',
-                'Rua General Osório, 401 | São Carlos - SP',
-                '(16) 3362-1900 | (16) 99798-9540',
-                'www.acisc.com.br'
-            ],
-            pageWidth / 2,
-            pageHeight - 10,
-            { align: 'center' }
-        );
-
-        const pageStr = `Página ${data.pageNumber}`;
-        doc.text(pageStr, pageWidth - 15, pageHeight - 6, { align: 'right' });
-    }
-});
-
-const finalYdaTabela = doc.lastAutoTable.finalY;
-let elementoY;
-
-if (finalYdaTabela + 30 > doc.internal.pageSize.getHeight() - 20) {
-    doc.addPage();
-    elementoY = 20; 
-} else {
-    elementoY = finalYdaTabela + 3; 
-}
-
-doc.setFillColor(75, 85, 99);
-doc.setLineWidth(0.4);
-doc.roundedRect(10, elementoY + 2, 184.5 + 6, 22, 2, 2, 'D'); 
+doc.setFontSize(15);
+doc.setFillColor(15, 118, 110);
+doc.setTextColor(255, 255, 255);
 doc.setFont("JakartaBold", "bold");
-doc.setFontSize(9);
+doc.roundedRect(
+(doc.internal.pageSize.getWidth() - (doc.getTextWidth(`Autorização de Contratação de Serviço`) + 10)) / 2, 
+yOffset + 6,
+doc.getTextWidth(`Autorização de Contratação de Serviço`) + 10, 7, 2, 2, 'FD');
+
+doc.text(
+    `Autorização de Contratação de Serviço`, 
+    doc.internal.pageSize.getWidth() / 2,
+    yOffset + 11, 
+    { align: 'center' }
+);
+yOffset += 10;
+
+doc.setDrawColor(15, 118, 110);
+doc.setLineWidth(0.5);
+doc.setFillColor(255, 255, 255);
+doc.roundedRect(10, yOffset + 6, 190, 120, 2, 2, 'FD')
+
+doc.setFontSize(13);
+doc.setFillColor(226, 232, 240);
 doc.setTextColor(15, 118, 110);
-doc.text(`Confira os benefícios:`, 12, elementoY + 6)
+doc.setFont("JakartaBold", "bold");
+doc.text('Detalhes do Serviço Contratado', 13, yOffset + 13);
 
-doc.setFontSize(8);
+doc.setFontSize(11);
 doc.setTextColor(75, 85, 99);
-doc.text("\u2022 Zero Burocracia -", 12, elementoY + 10)
-doc.text("\u2022 Atendimento Ágil -", 12, elementoY + 14)
-doc.text("\u2022 Faturas Fixas -", 12, elementoY + 18)
-doc.text("\u2022 Sem Renovação e Reajuste Automático -", 12, elementoY + 22)
 
+doc.setFont("JakartaBold", "bold");
+doc.text('Serviço:', 13, yOffset + 20);
 doc.setFont("Jakarta", "normal");
+doc.text('Roaming Internacional Travel Mundo - VIVO', 31, yOffset + 20);
+
+doc.setFont("JakartaBold", "bold");
+doc.text('Período:', 13, yOffset + 27);
+doc.setFont("Jakarta", "normal");
+doc.text(`${selectPeriodo}`, 31, yOffset + 27);
+
+doc.setFont("JakartaBold", "bold");
+doc.text('Data Início:', 13, yOffset + 34);
+doc.setFont("Jakarta", "normal");
+doc.text(`${dataInicio}`, 36, yOffset + 34);
+
+if (selectPeriodo === 'Diária') {
+    doc.setFont("JakartaBold", "bold");
+    doc.text('Data Fim:', 62, yOffset + 34);
+    doc.setFont("Jakarta", "normal");
+    doc.text(`${dataFim}`, 82, yOffset + 34);
+}
+
+doc.setFont("JakartaBold", "bold");
+doc.text('Linha(s):', 13, yOffset + 41);
+doc.setFont("Jakarta", "normal");
+doc.setFontSize(10);
 doc.setTextColor(75, 85, 99);
-doc.text("Esqueça 0800 ou lojas físicas, nós resolvemos com a operadora", 39, elementoY + 10)
-doc.text("Conte com o suporte dedicado da equipe ACISC para apoiar em dúvidas, solicitações e falhas", 41, elementoY + 14)
-doc.text("Proteção contra migrações de planos mais caros", 35, elementoY + 18)
-doc.text("Total controle sobre o plano e aumento de custos", 71, elementoY + 22)
+for (let i = 0; i < numeros.length; i += 5) {
+    doc.text(numeros.slice(i, i + 5).join(',  '), 31, yOffset + 41);
     
-doc.setFont("Jakarta", "normal");
-doc.setFontSize(5);
+    yOffset += 4;
+}
+
+doc.setDrawColor(15, 118, 110);
+doc.setLineWidth(0.5);
+doc.setFillColor(255, 255, 255);
+doc.roundedRect(10, yOffset + 44, 190, 0, 2, 2, 'D')
+
+doc.setFontSize(13);
+doc.setFillColor(226, 232, 240);
+doc.setTextColor(15, 118, 110);
+doc.setFont("JakartaBold", "bold");
+doc.text('Informações Adicionais', 13, yOffset + 52);
+
+doc.setFontSize(11);
 doc.setTextColor(75, 85, 99);
-doc.text(`*Esta tabela de valores terá validade apenas se corresponder à última revisão oficializada pela ACISC.`, 64, elementoY + 28,); 
+
+if (selectPeriodo === 'Diária') {
+    const infoAdd =  [
+        'O pacote de dados é variável de acordo com o local visitado',
+        'Tarifa excedente de  R$1,99 por minuto',
+        '50 minutos para originar chamadas e recebimento ilimitado de ligações e SMS',
+    ]
+
+    infoAdd.forEach(topico => {
+        doc.text('•', 15, yOffset + 62);  
+        doc.setFont("Jakarta", "normal");
+        doc.text(topico, 20, yOffset + 62);
+        yOffset += 7;
+    })
+    
+} else {
+    const infoAdd =  [
+        'O plano possui período de permanência mínima de 24 meses.',
+        'O serviço é cobrado mensalmente, mesmo que não haja utilização.',
+        'O Pacote de dados disponibilizado no exterior é o mesmo que a linha possui contratado.',
+        'O serviço não é compatível com pacotes de dados adicionais.',
+        'Inclui ligações e SMS ilimitados do exterior para o Brasil e dentro do país visitado',
+        'O serviço não contempla ligações originadas no Brasil para o exterior.',
+        'Cancelamento antes do fim da fidelidade está sujeito a multa correspondente a 80% do valor contratado multiplicado pelos meses restantes.',
+    ]
+
+
+    infoAdd.forEach(topico => {
+        const lines = doc.splitTextToSize(topico, 175);
+        doc.text('•', 15, yOffset + 62); 
+        doc.setFont("Jakarta", "normal");
+        doc.text(lines, 20, yOffset + 62); 
+        yOffset += (lines.length * 7);
+    })
+}
+
+doc.setFontSize(10);
+doc.text(`São Carlos, ${dia} de ${mes} de ${ano}`, 13 , yOffset + 74);
+
+doc.setTextColor(75, 85, 99); 
+doc.setFillColor(0, 0, 0);
+doc.rect(12, pageHeight - 34, 100, 0, 'D');
+doc.setFont("JakartaBold", "bold");
+doc.text(`${inputSocio}`, 12, pageHeight - 29);
+doc.setFontSize(9);
+doc.setFont("Jakarta", "normal");
+doc.text(`${inputCpf}`, 12, pageHeight - 25);
+
+
+doc.setFontSize(6);
+doc.setTextColor(75, 85, 99);
+doc.rect(0, pageHeight - 14, pageWidth, 15, 'F');
+doc.text("Cópia não controlada quando impressa ou transmitida eletronicamente", pageWidth / 2, pageHeight - 16, { align: 'center' });
+
+
+doc.setFontSize(7);
+doc.setTextColor(168, 205, 202);
+doc.setFillColor(15, 118, 110);
+doc.rect(0, pageHeight - 14, pageWidth, 15, 'F');
+
+doc.text(
+    [
+        'Associação Comercial e Industrial de São Carlos - ACISC',
+        'Rua General Osório, 401 | São Carlos - SP',
+        '(16) 3362-1900 | (16) 99798-9540',
+        'www.acisc.com.br'
+    ],
+    pageWidth / 2,
+    pageHeight - 10,
+    { align: 'center' }
+);
 
 const blob = doc.output('blob');
 // 2. Crie uma URL temporária para esse blob
@@ -279,213 +390,34 @@ const url = URL.createObjectURL(blob);
 // 3. Abra essa URL em uma nova aba
 window.open(url);
 
-// doc.save(`Proposta-${document.getElementById('empresa').value.replace(/[\/\\?%*:|"<> ]/g, '_')}.pdf`);
-};
- 
-    if (btnAdd) {
-        btnAdd.addEventListener('click', () => {
-            const telefone = document.getElementById('telefone').value;
-            const operadora = document.getElementById('operadora').value;
-            const processo = document.getElementById('processo').value;
-            const dados = document.getElementById('dados').value;
-            const valor = document.getElementById('valor').value;
-            const aviso = document.getElementById('aviso-proposta');
-
-            if (!operadora || !processo || !valor || !dados) {
-                aviso.textContent = 'Preencha todos os campos';
-                aviso.style.display = 'block';
-                return;
-            }
-            aviso.style.display = 'none';
-
-            if (telefone !== '' && dadosDaTabela.some(item => item.telefone === telefone)) {
-                aviso.textContent = 'Linha já incluída';
-                aviso.style.display = 'block';
-                return;
-            }
-            aviso.style.display = 'none';
-
-            let valorFormatado = valor.replace('R$', '').replace(/\./g, '').trim();
-            valorFormatado = valorFormatado.replace(',', '.');
-            const valorNumerico = parseFloat(valorFormatado) || 0;
-
-            document.getElementById('telefone').value = '';
-            let corOperadora = '';
-            if (operadora === 'VIVO') {
-                corOperadora = 'style="background-color: #9333EA; border-radius: 24px; color: #fff; padding: 2px 4px;"';
-            } else if (operadora === 'CLARO') {
-                corOperadora = 'style="background-color: #DC2626; border-radius: 24px; color: #fff; padding: 2px 4px;"';
-            };
-
-            let numeroTelefone = document.getElementById('telefone');
-            if (processo === 'Linha Nova' && telefone === '') {
-                numeroTelefone = 'Número Novo';
-            } else {
-                const telefoneLimpo = telefone.replace(/\D/g, '');
-                if (telefoneLimpo.length < 10) {
-                    aviso.textContent = 'Verifique o número';
-                    aviso.style.display = 'block';
-                    return;
-                }
-                aviso.textContent = '';
-                aviso.style.display = 'none';
-                numeroTelefone = telefone;
-            }
-
-            dadosDaTabela.push({ telefone, operadora, processo, dados, valor:valorNumerico });
-
-            const atualizarTotal = () => {
-                let total = 0;
-                const celulasValor = corpoTabela.querySelectorAll('tr td:nth-child(5)');
-                celulasValor.forEach(celula => {
-                    let valorString = celula.textContent;
-                    valorString = valorString.replace('R$', '').replace(/\./g, '').trim();
-                    valorString = valorString.replace(',', '.');
-                    const valorNumerico = parseFloat(valorString);
-                    if (!isNaN(valorNumerico)) {
-                        total += valorNumerico;
-                    }
-                });
-                valorTotal.textContent = new Intl.NumberFormat('pt-BR', {
-                    style: 'currency',
-                    currency: 'BRL'
-                }).format(total);
-            };
-
-            function atualizarResumoProcessos() {
-                const colunaDoProcesso = 2;
-                const divResumo = document.getElementById('barraResumo');
-                const contagem = { "Portabilidade": 0, "Linha Nova": 0, "Renovação": 0, "Transferência": 0 };
-                const todasAsLinhas = corpoTabela.querySelectorAll('tr');
-
-                todasAsLinhas.forEach(linha => {
-                    const celulaProcesso = linha.cells[colunaDoProcesso];
-                    if (celulaProcesso) {
-                        const tipoProcesso = celulaProcesso.textContent.trim();
-                        if (contagem.hasOwnProperty(tipoProcesso)) {
-                            contagem[tipoProcesso]++;
-                        }
-                    }
-                });
-
-                let resumoPartes = [];
-                const totalGeral = todasAsLinhas.length;
-                for (const tipo in contagem) {
-                    const quantidade = contagem[tipo];
-                    if (quantidade > 0) {
-                        const quantidadeFormatada = String(quantidade).padStart(2, '0');
-                        resumoPartes.push(`${quantidadeFormatada} - ${tipo}`);
-                    }
-                }
-                let textoFinal = `Processos Totais: ${String(totalGeral).padStart(2, '0')}`;
-                if (resumoPartes.length > 0) {
-                    textoFinal += ` (${resumoPartes.join(' | ')})`;
-                }
-                divResumo.textContent = textoFinal;
-            }
-
-            const novaLinhaHTML = `
-                <tr>
-                    <td style="font-weight: 500; border: 1px solid #000; color: #4B5563; padding: 8px;">${numeroTelefone}</td>
-                    <td style="font-weight: 500; border: 1px solid #000; color: #4b5563; padding: 8px 20px;"><p ${corOperadora}>${operadora}</p></td>
-                    <td style="font-weight: 500; border: 1px solid #000; color: #4b5563; padding: 8px;">${processo}</td>
-                    <td style="font-weight: 500; border: 1px solid #000; color: #4b5563; padding: 8px;">${dados} GB</td>
-                    <td style="font-weight: 500; border: 1px solid #000; color: #4b5563; padding: 8px;">${valor}</td>
-                    <td class="td-apagar" style="font-weight: 500; border: 1px solid #000; color: #DC2626; padding: 8px;">
-                        <button class="remover-linha">Apagar</button>
-                    </td>
-                </tr>
-            `;
-            corpoTabela.insertAdjacentHTML('beforeend', novaLinhaHTML);
-
-            tabelaPreenchida = true;
-
-            const novoBotao = corpoTabela.lastElementChild.querySelector('button');
-            novoBotao.addEventListener('click', (event) => {
-                  const linhaRemover = event.target.closest('tr');
-                    const linhas = Array.from(corpoTabela.children);
-                    const index = linhas.indexOf(linhaRemover);
-                    if (index > -1) {
-                        dadosDaTabela.splice(index, 1);
-                    }
-                    
-                    linhaRemover.remove();
-                    atualizarTotal();
-                    atualizarResumoProcessos();
-                    tabelaPreenchida = false;
-                });
-                atualizarTotal();
-                atualizarResumoProcessos();
-        });
-    }
-
-    window.addEventListener('beforeunload', function (event) {
-        if (tabelaPreenchida) {
-            event.preventDefault();
-        }
-    }); 
+// doc.save(`Roaming-Internacional-${document.getElementById('empresa-form').value.replace(/[\/\\?%*:|"<> ]/g, '_')}.pdf`);
+}
 
 botaoGerarPdf.addEventListener('click', gerarPdf);
+
+const btnForm = document.getElementById('btnPageForm');
+const btnProposta = document.getElementById('btnPageProposta');
+const pageForm = document.getElementById('page-form');
+const pageProposta = document.getElementById('page-proposta');
+
+function paginaForm() {
+    pageForm.classList.remove('hidden');
+    pageProposta.classList.add('hidden');
+
+    btnForm.classList.add('btnAtivo');
+    btnProposta.classList.remove('btnAtivo');
+}
+
+function paginaProposta() {
+    pageForm.classList.add('hidden');
+    pageProposta.classList.remove('hidden');
+
+    btnForm.classList.remove('btnAtivo');
+    btnProposta.classList.add('btnAtivo');
+}
+
+btnForm.addEventListener('click', paginaForm);
+btnProposta.addEventListener('click', paginaProposta);
+
     
-    inputTelefone.forEach(input => {
-        input.addEventListener('input', function() {
-            const valorFormatado = formatarTelefone(this.value);
-
-            this.value = valorFormatado
-        });
-    });
-
-    inputValor.forEach(input => {
-        input.addEventListener('input', function() {
-            const valorFormatado = formatarMoeda(this.value);
-
-            this.value = valorFormatado
-        });
-    });
-
-    inputCnpj.forEach(input => {
-        input.addEventListener('input', function() {
-            const valorFormatado = formatarCnpj(this.value);
-
-            this.value = valorFormatado
-        });
-    });
-
-    inputCep.forEach(input => {
-        input.addEventListener('input', function(){
-            const valorFormatado = formatarCep(this.value);
-
-            this.value = valorFormatado
-        });
-    })
-
-    if (inputDados) {
-        inputDados.addEventListener('input', function() {
-            const limiteDados = 999;
-            let dados = parseInt(this.value.replace(/\D/g, ''), 10) || 0;
-            if (dados > limiteDados) { 
-                dados = limiteDados
-            }
-            this.value = dados === 0 ? '' : dados;
-        });
-    };
-    
-
-    const checkboxOcultarValor = document.getElementById('ocultar-valor');
-    const iconeToggleValor = document.getElementById('toggle-valor-icon');
-
-    iconeToggleValor.addEventListener('click', () => {
-    checkboxOcultarValor.checked = !checkboxOcultarValor.checked;
-    
-    if (checkboxOcultarValor.checked) {
-        iconeToggleValor.classList.remove('fa-eye');
-        iconeToggleValor.classList.add('fa-eye-slash');
-        iconeToggleValor.title = 'Colunas ocultas no PDF';
-    } else {
-        iconeToggleValor.classList.remove('fa-eye-slash');
-        iconeToggleValor.classList.add('fa-eye');
-        iconeToggleValor.title = 'Colunas visíveis no PDF';
-    }
-
-});
 });
