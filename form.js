@@ -7,11 +7,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnAdd = document.getElementById('btnAddLinha');
     const dataInicio = document.getElementById('dataInicio');
     const dataFim = document.getElementById('dataFim');
-    const aviso = document.getElementById('aviso-form');
     const selectPeriodo = document.getElementById('inputPeriodo');
+    const aviso = document.getElementById('aviso-form');
     const inputValor = document.getElementById ('inputValorForm');
     const inputCpf = document.getElementById('cpf-form');
     const botaoGerarPdf = document.getElementById('gerarPdf-form');
+
+    const hoje = new Date(new Date().getTime() - (new Date().getTimezoneOffset() * 60000))
+    .toISOString()
+    .split('T')[0];
+
+    dataInicio.setAttribute('min', hoje);
+    dataFim.setAttribute('min', hoje);
+
+    dataInicio.addEventListener('change', () => {
+        dataFim.setAttribute('min', dataInicio.value || hoje);
+    });
 
     function adicionarLinha() {
         let telefone = inputTelefone.value;
@@ -320,11 +331,13 @@ if (selectPeriodo === 'Diária') {
     ]
 
     infoAdd.forEach(topico => {
+        const lines = doc.splitTextToSize(topico, 175);
         doc.text('•', 15, yOffset + 62);  
         doc.setFont("Jakarta", "normal");
         doc.text(topico, 20, yOffset + 62);
-        yOffset += 7;
+        yOffset += (lines.length * 7);
     })
+    yOffset += 34
     
 } else {
     const infoAdd =  [
