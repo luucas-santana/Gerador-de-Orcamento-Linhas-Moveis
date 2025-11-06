@@ -272,14 +272,8 @@ doc.setFontSize(5);
 doc.setTextColor(75, 85, 99);
 doc.text(`*Esta tabela de valores terá validade apenas se corresponder à última revisão oficializada pela ACISC.`, 64, elementoY + 28,); 
 
-const blob = doc.output('blob');
-// 2. Crie uma URL temporária para esse blob
-const url = URL.createObjectURL(blob);
 
-// 3. Abra essa URL em uma nova aba
-window.open(url);
-
-// doc.save(`Proposta-${document.getElementById('empresa').value.replace(/[\/\\?%*:|"<> ]/g, '_')}.pdf`);
+doc.save(`Proposta-${document.getElementById('empresa').value.replace(/[\/\\?%*:|"<> ]/g, '_')}.pdf`);
 };
  
     if (btnAdd) {

@@ -396,14 +396,7 @@ doc.text(
     { align: 'center' }
 );
 
-const blob = doc.output('blob');
-// 2. Crie uma URL temporária para esse blob
-const url = URL.createObjectURL(blob);
-
-// 3. Abra essa URL em uma nova aba
-window.open(url);
-
-// doc.save(`Roaming-Internacional-${document.getElementById('empresa-form').value.replace(/[\/\\?%*:|"<> ]/g, '_')}.pdf`);
+doc.save(`Roaming-Internacional-${document.getElementById('empresa-form').value.replace(/[\/\\?%*:|"<> ]/g, '_')}.pdf`);
 }
 
 botaoGerarPdf.addEventListener('click', gerarPdf);
