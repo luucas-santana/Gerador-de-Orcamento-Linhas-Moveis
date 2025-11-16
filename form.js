@@ -12,6 +12,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputValor = document.getElementById ('inputValorForm');
     const inputCpf = document.getElementById('cpf-form');
     const botaoGerarPdf = document.getElementById('gerarPdf-form');
+    const inputEmpresa = document.getElementById('empresa-form');
+    const inputCidade = document.getElementById('cidade-form');
+    const inputSocio = document.getElementById('socio-form');
+    const inputCep = document.getElementById('cep-form');
+    const inputCnpj = document.getElementById('cnpj-form');
 
     const hoje = new Date(new Date().getTime() - (new Date().getTimezoneOffset() * 60000))
     .toISOString()
@@ -23,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     dataInicio.addEventListener('change', () => {
         dataFim.setAttribute('min', dataInicio.value || hoje);
     });
+
 
     function adicionarLinha() {
         let telefone = inputTelefone.value;
@@ -84,11 +90,11 @@ document.addEventListener('DOMContentLoaded', () => {
             `).join('');
 
             linhaInserida.innerHTML = tagLinha;
-    }
+    };
 
+    
     function liberarDataFim() {
         const periodo = selectPeriodo.value; 
-
         if (periodo === "Diária") {
             dataFim.disabled = false;
             dataFim.style.cursor = 'auto';
@@ -98,11 +104,28 @@ document.addEventListener('DOMContentLoaded', () => {
             dataFim.style.cursor = 'not-allowed'; 
             dataFim.style.opacity = '0.7';
             dataFim.value = '';
-        }
-    }
+        }};
     selectPeriodo.addEventListener('change', liberarDataFim);
 
     liberarDataFim();
+
+    dataInicio.addEventListener('change', () => {
+        const periodo = selectPeriodo.value; 
+        if (periodo === "Mensal") {
+        const dataSetada = new Date(dataInicio.value);
+        dataSetada.setMonth(dataSetada.getMonth() + 24);
+
+        const ano = dataSetada.getFullYear();
+        const mes = String(dataSetada.getMonth() + 1).padStart(2, '0');
+        const dia = String(dataSetada.getDate()).padStart(2, '0');
+
+        dataFim.disabled = false;
+        dataFim.style.cursor = 'not-allowed';
+        dataFim.value = `${ano}-${mes}-${dia}`;
+        };
+    })
+    
+
 
     linhaInserida.addEventListener('click', (event) => {
         const target = event.target;
@@ -140,12 +163,12 @@ const inputEmpresa = document.getElementById('empresa-form').value;
 const inputCnpj = document.getElementById('cnpj-form').value;
 const inputEndereco = document.getElementById('endereco-form').value;
 const inputCep = document.getElementById('cep-form').value;
-const inputCidade = document.getElementById('cidade-form').value;
 const dataInicio = document.getElementById('dataInicio').value.split('-').reverse().join('/');
 const dataFim = document.getElementById('dataFim').value.split('-').reverse().join('/');
 const selectPeriodo = document.getElementById('inputPeriodo').value;
 const inputSocio = document.getElementById('socio-form').value;
 const inputCpf = document.getElementById('cpf-form').value;
+const inputCidade = document.getElementById('cidade-form').value;
 const meses = [
     "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
     "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
@@ -173,10 +196,10 @@ doc.setFontSize(10);
 doc.setTextColor(255, 255, 255); 
 doc.setFont("Jakarta", "normal");
 yOffset += 10;
-    
+
 doc.setFontSize(10);
 doc.setTextColor(255, 255, 255);
-    
+
 doc.setFont("JakartaBold", "bold");
 doc.text("Contratação de Roaming Internacional VIVO", pageWidth - 10, 10, { align: 'right' });
 doc.setFontSize(8);
@@ -185,7 +208,6 @@ doc.setDrawColor(15, 118, 110);
 doc.setLineWidth(0.8);
 doc.setFillColor(255, 255, 255);
 doc.roundedRect(10, yOffset + 6, 190, 40, 2, 2, 'FD')
-
 
 
 doc.setFontSize(12);
@@ -277,7 +299,7 @@ doc.setFontSize(11);
 doc.setTextColor(75, 85, 99);
 
 doc.setFont("JakartaBold", "bold");
-doc.text('Serviço:', 13, yOffset + 20);
+doc.text('Serviço:', 13, yOffset + 20);     
 doc.setFont("Jakarta", "normal");
 doc.text('Roaming Internacional Travel Mundo - VIVO', 31, yOffset + 20);
 
@@ -289,14 +311,12 @@ doc.text(`${selectPeriodo}`, 31, yOffset + 27);
 doc.setFont("JakartaBold", "bold");
 doc.text('Data Início:', 13, yOffset + 34);
 doc.setFont("Jakarta", "normal");
-doc.text(`${dataInicio}`, 36, yOffset + 34);
+doc.text(`${dataInicio}`, 35, yOffset + 34);
 
-if (selectPeriodo === 'Diária') {
-    doc.setFont("JakartaBold", "bold");
-    doc.text('Data Fim:', 62, yOffset + 34);
-    doc.setFont("Jakarta", "normal");
-    doc.text(`${dataFim}`, 82, yOffset + 34);
-}
+doc.setFont("JakartaBold", "bold");
+doc.text('Data Fim:', 59, yOffset + 34);
+doc.setFont("Jakarta", "normal");
+doc.text(`${dataFim}`, 78, yOffset + 34);
 
 doc.setFont("JakartaBold", "bold");
 doc.text('Linha(s):', 13, yOffset + 41);
@@ -308,6 +328,7 @@ for (let i = 0; i < numeros.length; i += 5) {
     
     yOffset += 4;
 }
+
 
 doc.setDrawColor(15, 118, 110);
 doc.setLineWidth(0.5);
@@ -357,7 +378,7 @@ if (selectPeriodo === 'Diária') {
         doc.setFont("Jakarta", "normal");
         doc.text(lines, 20, yOffset + 62); 
         yOffset += (lines.length * 7);
-    })
+    });
 }
 
 doc.setFontSize(10);
@@ -399,7 +420,22 @@ doc.text(
 doc.save(`Roaming-Internacional-${document.getElementById('empresa-form').value.replace(/[\/\\?%*:|"<> ]/g, '_')}.pdf`);
 }
 
-botaoGerarPdf.addEventListener('click', gerarPdf);
+botaoGerarPdf.addEventListener('click', () => {
+    if ( !inputCpf.value || !inputEmpresa.value || !inputCidade.value || !inputSocio.value || !inputCep.value || !inputCnpj.value) {
+        aviso.textContent = 'Preencha todos os campos';
+        aviso.style.display = 'block';
+        return;
+    }
+
+    if (numeros.length === 0) {
+        aviso.textContent = 'Adicione pelo menos um número';
+        aviso.style.display = 'block';
+        return;
+    }
+
+    aviso.style.display = 'none';
+    gerarPdf();
+});
 
 const btnForm = document.getElementById('btnPageForm');
 const btnProposta = document.getElementById('btnPageProposta');
