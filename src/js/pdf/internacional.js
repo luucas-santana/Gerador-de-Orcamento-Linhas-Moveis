@@ -1,4 +1,3 @@
-import {formatarTelefone, formatarCpf} from "./formatador.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     const inputTelefone = document.getElementById('inputNumeroForm');
@@ -112,16 +111,16 @@ document.addEventListener('DOMContentLoaded', () => {
     dataInicio.addEventListener('change', () => {
         const periodo = selectPeriodo.value; 
         if (periodo === "Mensal") {
-        const dataSetada = new Date(dataInicio.value);
-        dataSetada.setMonth(dataSetada.getMonth() + 24);
+            const dataSetada = new Date(dataInicio.value);
+            dataSetada.setMonth(dataSetada.getMonth() + 24);
 
-        const ano = dataSetada.getFullYear();
-        const mes = String(dataSetada.getMonth() + 1).padStart(2, '0');
-        const dia = String(dataSetada.getDate()).padStart(2, '0');
+            const ano = dataSetada.getFullYear();
+            const mes = String(dataSetada.getMonth() + 1).padStart(2, '0');
+            const dia = String(dataSetada.getDate()).padStart(2, '0');
 
-        dataFim.disabled = false;
-        dataFim.style.cursor = 'not-allowed';
-        dataFim.value = `${ano}-${mes}-${dia}`;
+            dataFim.disabled = false;
+            dataFim.style.cursor = 'not-allowed';
+            dataFim.value = `${ano}-${mes}-${dia}`;
         };
     })
     
@@ -143,19 +142,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     atualizar();
 
-    if (inputTelefone) {
-        inputTelefone.addEventListener('input', function() {
-            const valorFormatado = formatarTelefone(this.value);
-            this.value = valorFormatado;
-        });
-    }
-
-    if (inputCpf) {
-        inputCpf.addEventListener('input', function() {
-            const valorFormatado = formatarCpf(this.value);
-            this.value = valorFormatado
-        })
-    }
 
 
 function gerarPdf() {
@@ -169,6 +155,7 @@ const selectPeriodo = document.getElementById('inputPeriodo').value;
 const inputSocio = document.getElementById('socio-form').value;
 const inputCpf = document.getElementById('cpf-form').value;
 const inputCidade = document.getElementById('cidade-form').value;
+const inputValor = document.getElementById('inputValorForm').value;
 const meses = [
     "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
     "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
@@ -293,20 +280,20 @@ doc.setFontSize(13);
 doc.setFillColor(226, 232, 240);
 doc.setTextColor(15, 118, 110);
 doc.setFont("JakartaBold", "bold");
-doc.text('Detalhes do Serviço Contratado', 13, yOffset + 13);
+doc.text('Contratação - Roaming Internacional VIVO', 13, yOffset + 13);
 
 doc.setFontSize(11);
 doc.setTextColor(75, 85, 99);
 
 doc.setFont("JakartaBold", "bold");
-doc.text('Serviço:', 13, yOffset + 20);     
+doc.text('Período:', 13, yOffset + 20);     
 doc.setFont("Jakarta", "normal");
-doc.text('Roaming Internacional Travel Mundo - VIVO', 31, yOffset + 20);
+doc.text(`${selectPeriodo}`, 31, yOffset + 20);
 
 doc.setFont("JakartaBold", "bold");
-doc.text('Período:', 13, yOffset + 27);
+doc.text('Valor:', 13, yOffset + 27);
 doc.setFont("Jakarta", "normal");
-doc.text(`${selectPeriodo}`, 31, yOffset + 27);
+doc.text(`${inputValor}`, 26, yOffset + 27);
 
 doc.setFont("JakartaBold", "bold");
 doc.text('Data Início:', 13, yOffset + 34);
@@ -314,9 +301,9 @@ doc.setFont("Jakarta", "normal");
 doc.text(`${dataInicio}`, 35, yOffset + 34);
 
 doc.setFont("JakartaBold", "bold");
-doc.text('Data Fim:', 59, yOffset + 34);
+doc.text('Data Fim:', 60, yOffset + 34);
 doc.setFont("Jakarta", "normal");
-doc.text(`${dataFim}`, 78, yOffset + 34);
+doc.text(`${dataFim}`, 79, yOffset + 34);
 
 doc.setFont("JakartaBold", "bold");
 doc.text('Linha(s):', 13, yOffset + 41);
@@ -328,7 +315,6 @@ for (let i = 0; i < numeros.length; i += 5) {
     
     yOffset += 4;
 }
-
 
 doc.setDrawColor(15, 118, 110);
 doc.setLineWidth(0.5);
@@ -346,6 +332,7 @@ doc.setTextColor(75, 85, 99);
 
 if (selectPeriodo === 'Diária') {
     const infoAdd =  [
+        'O valor é cobrado por dia de utilização do serviço',
         'O pacote de dados é variável de acordo com o local visitado',
         'Tarifa excedente de  R$1,99 por minuto',
         '50 minutos para originar chamadas e recebimento ilimitado de ligações e SMS',
@@ -417,7 +404,10 @@ doc.text(
     { align: 'center' }
 );
 
+// doc.output('dataurlnewwindow');
+
 doc.save(`Roaming-Internacional-${document.getElementById('empresa-form').value.replace(/[\/\\?%*:|"<> ]/g, '_')}.pdf`);
+
 }
 
 botaoGerarPdf.addEventListener('click', () => {
@@ -436,30 +426,6 @@ botaoGerarPdf.addEventListener('click', () => {
     aviso.style.display = 'none';
     gerarPdf();
 });
-
-const btnForm = document.getElementById('btnPageForm');
-const btnProposta = document.getElementById('btnPageProposta');
-const pageForm = document.getElementById('page-form');
-const pageProposta = document.getElementById('page-proposta');
-
-function paginaForm() {
-    pageForm.classList.remove('hidden');
-    pageProposta.classList.add('hidden');
-
-    btnForm.classList.add('btnAtivo');
-    btnProposta.classList.remove('btnAtivo');
-}
-
-function paginaProposta() {
-    pageForm.classList.add('hidden');
-    pageProposta.classList.remove('hidden');
-
-    btnForm.classList.remove('btnAtivo');
-    btnProposta.classList.add('btnAtivo');
-}
-
-btnForm.addEventListener('click', paginaForm);
-btnProposta.addEventListener('click', paginaProposta);
 
     
 });

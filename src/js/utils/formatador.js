@@ -21,7 +21,7 @@ let digitos = stringValor(String(valor));
 
     let numero = Number(digitos) / 100;
     
-    const limite = 1000;
+    const limite = 10000;
     if (numero > limite) {
         numero = limite;
     }

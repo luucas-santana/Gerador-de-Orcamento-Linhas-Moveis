@@ -1,4 +1,3 @@
-import { formatarMoeda, formatarCnpj, formatarTelefone, formatarCep } from "./formatador.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     const btnAdd = document.getElementById('btn-adicionar');
@@ -6,12 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const dadosDaTabela = [];
     const valorTotal = document.getElementById('valor-total');
     const botaoGerarPdf = document.getElementById('gerarPdf');
-    const inputValor = document.querySelectorAll('.moedaInput')
-    const inputTelefone = document.querySelectorAll('.numeroTelefone');
-    const inputCnpj = document.querySelectorAll('.inputCnpj')
     const inputDados = document.getElementById('dados');
-    const inputCep = document.querySelectorAll('.inputCep')
-
     let tabelaPreenchida = false;
 
 
@@ -396,7 +390,7 @@ doc.save(`Proposta-${document.getElementById('empresa').value.replace(/[\/\\?%*:
 
             const novoBotao = corpoTabela.lastElementChild.querySelector('button');
             novoBotao.addEventListener('click', (event) => {
-                  const linhaRemover = event.target.closest('tr');
+                    const linhaRemover = event.target.closest('tr');
                     const linhas = Array.from(corpoTabela.children);
                     const index = linhas.indexOf(linhaRemover);
                     if (index > -1) {
@@ -421,37 +415,7 @@ doc.save(`Proposta-${document.getElementById('empresa').value.replace(/[\/\\?%*:
 
 botaoGerarPdf.addEventListener('click', gerarPdf);
     
-    inputTelefone.forEach(input => {
-        input.addEventListener('input', function() {
-            const valorFormatado = formatarTelefone(this.value);
-
-            this.value = valorFormatado
-        });
-    });
-
-    inputValor.forEach(input => {
-        input.addEventListener('input', function() {
-            const valorFormatado = formatarMoeda(this.value);
-
-            this.value = valorFormatado
-        });
-    });
-
-    inputCnpj.forEach(input => {
-        input.addEventListener('input', function() {
-            const valorFormatado = formatarCnpj(this.value);
-
-            this.value = valorFormatado
-        });
-    });
-
-    inputCep.forEach(input => {
-        input.addEventListener('input', function(){
-            const valorFormatado = formatarCep(this.value);
-
-            this.value = valorFormatado
-        });
-    })
+   
 
     if (inputDados) {
         inputDados.addEventListener('input', function() {
